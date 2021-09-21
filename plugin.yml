@@ -1,0 +1,15 @@
+main: net.custolobby.plugin.CustoLobby
+name: CustoLobby
+version: 1.0.1
+author: AISimple
+softdepends: [PlaceholderAPI]
+permissions:
+  custolobby.*:
+    children:
+      - custolobby.manager
+      - custolobby.join
+      - custolobby.quit
+commands:
+  custolobby:
+    aliases: [cl]
+    description: Principal Command

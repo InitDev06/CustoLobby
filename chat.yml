@@ -1,0 +1,36 @@
+enable-format: true
+enable-filter: true
+enable-blacklist: true
+# ==================
+# |  Chat-Formats  |
+# ==================
+# this formats will be use when the player send a message, if the player have the permission "custolobby.chat", will be use the format "rank", else is not, will be use the "default".
+formats: 
+  groups: 
+    rank: 
+      prefix: ""
+    default:
+      prefix: ""
+      
+# ==================
+# |  Words-Filter  |
+# ==================
+# this words will be prohibited on your server.     
+filter-list:
+  - L
+  - ez
+  - shit
+  - beach
+  - stupid
+  
+# ========================
+# |  Blacklist-Commands  |
+# ========================
+# this commands can't execute by user on the server.
+blacklist-cmds:
+  - plugins
+  - bukkit:ver
+  - bukkit:about
+  - stats
+  - op
+  - stop

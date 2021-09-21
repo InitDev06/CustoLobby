@@ -1,0 +1,98 @@
+messages: 
+  must-be-player: "&cCannot execute by console"
+  missing-permission: "&cYou can't execute this command!"
+# =====================
+# |  Command-Manager  |
+# =====================
+  file-unknown: "&8[&eCustoLobby&8] &cThis file doesn't exists!"
+  unknown-args: "&8[&eCustoLobby&8] &cThis sub-command doesn't exists!"
+  args: "&8[&eCustoLobby&8] &fUse the command &a/cl help"
+  reload: "&8[&eCustoLobby&8] &fPlease specify the file to reload."
+  config: "&8[&eCustoLobby&8] &fThe file &aconfig.yml &fhas been reloaded."
+  messages: "&8[&eCustoLobby&8] &fThe file &amessages.yml &fhas been reloaded."
+  chat: "&8[&eCustoLobby&8] &fThe file &achat.yml &fhas been reloaded"
+  scoreboard: "&8[&eCustoLobby&8] &fThe file &ascoreboard.yml &fhas been reloaded"
+
+# ==============
+# |  Announce  |
+# ==============
+  actionbar: "&aWelcome &b%player_name%&a!"
+  title: "&a&lv1.0.1"
+  subtitle: "&8- &eSpigotMC"
+  motd:
+    - ""
+    - ""
+    - ""
+    - ""
+    - ""
+    - ""
+  rank-join: "%vault_prefix% &e%player_name% &8- &fHas joined to server"
+# if the player have the permission "custolobby.join", will be send this message when join to server.
+  rank-quit: "%vault_prefix% &e%player_name% &8- &fIf has left the server"
+# if the player have the permission "custolobby.quit", will be send this message when left the server.
+  social-networks:
+    1:
+      name: "  &6Forum"
+      link: "https://yourServer.com/"
+      description: "&a&lCLICK HERE!"
+    2: 
+      name: "  &eStore"
+      link: "https://yourServer.com/store"
+      description: "&a&lCLICK HERE!"
+    3: 
+      name: "  &bTwitter"
+      link: "https://twitter.com/@yourServer"
+      description: "&a&lCLICK HERE!"
+    4: 
+      name: "  &9Discord"
+      link: "https://discord.yourServer.com"
+      description: "&a&lCLICK HERE!"
+
+# ======================
+# |  Gamemode-Manager  |
+# ======================
+# this messages will be use on the command "/gm".
+  gm-usage: ""
+  gm-survival: ""
+  gm-creative: ""
+  gm-adventure: ""
+  gm-spectator: ""
+  gm-other-survival: ""
+  gm-other-creative: ""
+  gm-other-adventure: ""
+  gm-other-spectator: ""
+  gm-null: ""
+  
+# ====================
+# |  Flight-Manager  |
+# ====================
+  flight-enable: ""
+  flight-disable: ""
+  flight-other-enable: ""
+  flight-other-disable: ""
+  
+# ====================
+# |  Vanish-Manager  |
+# ====================
+  vanish-enable: ""
+  vanish-disable: ""
+
+# ===================
+# |  World-Manager  |
+# ===================
+  not-build: "&8[&eCustoLobby&8] &cYou can't build here!"
+  not-break: "&8[&eCustoLobby&8] &cYou can't break here!"
+
+# ==================
+# |  Chat-Manager  |
+# ==================
+  blocked-command:
+    - ""
+    - ""
+    - ""
+    - ""
+  blocked-words:
+    - ""
+    - ""
+    - ""
+    - ""

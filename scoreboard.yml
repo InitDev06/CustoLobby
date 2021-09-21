@@ -1,0 +1,22 @@
+# ========================
+# |  Scoreboard-Manager  |
+# ========================
+Scoreboard: 
+  enable: true
+# this define if the scoreboard is active or not, if is true, the scoreboard will show to players, else is not, the scoreboard will be clear.
+  refresh: 20
+# this is the time on the scoreboard will be refresh, if is 20, 20 ticks = 1 second.
+  title: "&e&lCUSTOLOBBY"
+  lines:
+    - ""
+    - "&fNick: &e%player_name%"
+    - "&fRank: &r%vault_prefix%"
+    - "&fLevel: &6%level%"
+    - ""
+    - "&fWorld: &9%world_name%"
+    - "&fLobby: &b#1"
+    - ""
+    - "&fOnline: &d%connected%"
+    - "&fGlobal: &d%bungee_online%"
+    - ""
+    - "&ayourServer.com"
