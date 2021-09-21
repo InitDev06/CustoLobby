@@ -1,8 +1,11 @@
 # CustoLobby
-Source code of CustoLobby plugin.
+Source code.
 
-Hello, the plugin i yet not upload to spigot, here i upload the progress of developing of plugin, when the plugin is terminated, will update this repository if i add a new function or  fix bugs , you can use the code if you like.
+You can use this code if you like, but, yet i not terminate of create this plugin
+so the plugin can contains any errors or bugs, so if you use this code, and find any error or bug, 
+can advise me per discord [GitSimple#3165]
 
-[Remenber, this plugin is on developing, is a early version, so the code may contains errors, if you find any, please contact me. {GitSimple#3165}]
+Well per the moment, i will continue the development of plugin, if terminate, will update this description
+adding the link of plugin. GoodBye!
 
 ATT: AISimple (iCodexs)
