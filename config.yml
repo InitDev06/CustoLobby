@@ -1,51 +1,49 @@
-# here you can change options of the plugin, active or deactive the functions.
-settings: 
-  lobby-point: 
-    world: ""
-    x:
-    y:
-    z:
-    yaw:
-    pitch: 
-# this section define the spawn of the server
-  damage: false
-# this disable the damage for entities.
-  hunger: false
-# disable the hunger for the players.
-  build: false
-# the players can't build or break on the lobby.
-  weather: false
-# storms will be defused
-  entities: false
-# this will clear any entity on the world. (Zombies, animals, etc)
-  use-actionbar: true
-# if is true, when the player join to server will be send a actionbar.
-  use-titles: true
-# if is true, when the player join, will be show a message on screen.
-  use-subtitles: true
-# if is true, when the player join will be show a second message on screen.
-  use-sounds: true
-# if is true, when the player join will be produce a sound on the player location.
-  use-fireworks: true
-# when the player join, will be launch fireworks.
-  give-speed: true
-# if this is true, when the player join to server, if have the permission "custolobby.speed", will be receive Speed II.
-  give-bow: true
-# if is true, when the player join, will be receive a bow, with this item, the player can teleport to any place on the lobby.
-  use-motd: true
-# if is true, when the player join, will be receive a big message. (MOTD)
-  use-networks: true
-# when the player join, will be receive all the social networks of server.
-  bow-slot: 1
-# on this slot the bow will be given to player.  
-  bow-name: "&aTeleporter"
-# this name will be receive the bow.
-  sound-id: NOTE_PLING
-# insert here the sound id.
-  firework-power: 5
-# this represents the power of fireworks to be launch.
-  title:
-# this section will depends of class "SubtitlePlayer" and "TitlePlayer", this config affect the two class.
-    fadeIn: 5
-    stay: 20
-    fadeOut: 35
+# This descriptions will explicate how functions the options of the plugin, the proteccions, titles, sounds and more.
+# Also you can revise the plugin pagine for more information!
+lobby-point: 
+# this save the spawn location.
+  world: ''
+  x:
+  y:
+  z:
+  yaw:
+  pitch:  
+build: false
+# if is "true", the players can build or break in the lobby, only if have the necessary permission. (custolobby.build)
+damage: false
+# this cancel the damage for the players.
+hunger: false
+# this deactive the hunger.
+weather: false
+# the weathers on the world will be cancelled.
+entities: false
+# not spawn more entities on the world.
+interact: false
+# the players can't interact with the world or the objects.
+build-title: true
+# will send a title message for the user.
+build-firework: true
+# will be launch a firework if detect a player has joined.
+give-speed: true
+# the players recibe a potion effect. (Speed II)
+reproduce-sound: true
+# if is true, reproduce a sound specified for the player
+send-motd: true
+# this is the principal welcome message for the user
+send-networks: true
+# if this is "true", all social networks of server will be send to player
+title:
+# on this options, you can specify the velocity with the title is sended, manteins and disappears
+  fadeIn: 5
+  stay: 20
+  fadeOut: 35
+firework-power: 5
+# this number represents the power of fireworks
+sound: NOTE_PLING
+# this sound is produced when the player has joined to server
+sounds-to-flight: true
+# if the player execute the command "/flight", will reproduce the sound
+id: ENDERDRAGON_WINGS
+# this is the type of sound will be reproduce
+use-tablist: true
+# if is true, the default tablist of server, will be replace by the new.

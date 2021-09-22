@@ -5,8 +5,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
-import net.custolobby.plugin.utility.BlacklistCommands;
-import net.custolobby.plugin.utility.WordsChatFilter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -14,104 +12,119 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.custolobby.plugin.actionbar.Actionbar;
-import net.custolobby.plugin.actionbar.v1_8.Actionbar_1_8_R1;
-import net.custolobby.plugin.actionbar.v1_8.Actionbar_1_8_R2;
-import net.custolobby.plugin.actionbar.v1_8.Actionbar_1_8_R3;
-import net.custolobby.plugin.actionbar.v1_9.Actionbar_1_9_R1;
-import net.custolobby.plugin.actionbar.v1_9.Actionbar_1_9_R2;
 import net.custolobby.plugin.color.Color;
 import net.custolobby.plugin.commands.CommandManager;
-import net.custolobby.plugin.listeners.ActionbarPlayer;
-import net.custolobby.plugin.listeners.HoverLinkMessages;
-import net.custolobby.plugin.listeners.JoinPlayer;
-import net.custolobby.plugin.listeners.QuitPlayer;
-import net.custolobby.plugin.listeners.SettingsPlayer;
-import net.custolobby.plugin.listeners.SoundPlayer;
-import net.custolobby.plugin.listeners.SubtitlePlayer;
-import net.custolobby.plugin.listeners.TitlePlayer;
-import net.custolobby.plugin.scoreboard.CreateScoreboard;
-import net.custolobby.plugin.title.Subtitle;
-import net.custolobby.plugin.title.Title;
-import net.custolobby.plugin.title.v1_8.Subtitle_1_8_R1;
-import net.custolobby.plugin.title.v1_8.Subtitle_1_8_R2;
-import net.custolobby.plugin.title.v1_8.Subtitle_1_8_R3;
-import net.custolobby.plugin.title.v1_8.Title_1_8_R1;
-import net.custolobby.plugin.title.v1_8.Title_1_8_R2;
-import net.custolobby.plugin.title.v1_8.Title_1_8_R3;
-import net.custolobby.plugin.title.v1_9.Subtitle_1_9_R1;
-import net.custolobby.plugin.title.v1_9.Subtitle_1_9_R2;
-import net.custolobby.plugin.title.v1_9.Title_1_9_R1;
-import net.custolobby.plugin.title.v1_9.Title_1_9_R2;
+import net.custolobby.plugin.commands.CreateLocation;
+import net.custolobby.plugin.commands.FlightManager;
+import net.custolobby.plugin.commands.GamemodeManager;
+import net.custolobby.plugin.commands.GetLocation;
+import net.custolobby.plugin.commands.HelpCommand;
+import net.custolobby.plugin.commands.NickManager;
+import net.custolobby.plugin.commands.TeleportManager;
+import net.custolobby.plugin.commands.VanishManager;
+import net.custolobby.plugin.listeners.PlayerChat;
+import net.custolobby.plugin.listeners.PlayerJoin;
+import net.custolobby.plugin.listeners.PlayerLeft;
+import net.custolobby.plugin.listeners.PlayerSettings;
+import net.custolobby.plugin.listeners.PlayerSound;
+import net.custolobby.plugin.listeners.PlayerTeleport;
+import net.custolobby.plugin.listeners.PlayerTitle;
+import net.custolobby.plugin.listeners.ReproduceSoundToFlight;
+import net.custolobby.plugin.listeners.ServerNetworks;
+import net.custolobby.plugin.listeners.TabListServer;
+import net.custolobby.plugin.utility.ChatFilter;
+import net.custolobby.plugin.utility.CommandsBlocked;
 import net.custolobby.plugin.utility.FireworkBuilder;
-import net.custolobby.plugin.world.WorldProtection;
 
 public class CustoLobby extends JavaPlugin {
 	
 	private static CustoLobby instance;
 	
-	private Actionbar actionbar;
-	private Title title;
-	private Subtitle subtitle;
-	
 	private FileConfiguration messages;
 	private File messagesFile;
-	
-	private FileConfiguration scoreboard;
-	private File scoreboardFile;
 	
 	private FileConfiguration chat;
 	private File chatFile;
 	
-	int ticks = getScoreboard().getInt("Scoreboard.refresh");
+	private FileConfiguration tablist;
+	private File tablistFile;
 	
 	PluginDescriptionFile pdf = getDescription();
 	
 	public final String VERSION = pdf.getVersion();
+	public final String SPIGOT = Bukkit.getBukkitVersion();
 	
 	@Override
 	public void onEnable() {
-		CreateScoreboard createScoreboard = new CreateScoreboard(this);
-		createScoreboard.create(ticks);
-
+		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &floading components.."));
 		loadMessages();
-		loadScoreboard();
 		loadChat();
 		getConfig().options().copyDefaults(true);
 		getConfig().options().copyHeader(true);
 		saveDefaultConfig();
+		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &eloaded config.yml"));
 		saveResource("messages.yml", false);
+		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &eloaded messages.yml"));
 		saveResource("chat.yml", false);
-		saveResource("scoreboard.yml", false);
+		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &eloaded chat.yml"));
+		saveResource("tablist.yml", false);
+		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &eloaded tablist.yml"));
 		
 		importEvents();
 		importCommands();
 		
-		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &fLoading components.."));
-		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &fVersion on Running: &a" + VERSION));
-		
-		if (setupVersions()) {
+		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &fversion on running &a" + VERSION));
+		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &frunning on Spigot/Paper &b" + SPIGOT));
 
-            Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &aThe plugin has been activated correctly!"));
-
-        } else {
-
-        	Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &cHas occurred an error to try activate the plugin"));
-        	Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &eYour server version is not compatible with this plugin!"));
-
-            Bukkit.getPluginManager().disablePlugin(this);
-        }
-		
 	}
 	
 	@Override
-	public void onDisable() {
+	public void onDisable() { 
+		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &cdisabling plugin.."));
+		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &esaving data..."));
 		saveDefaultConfig();
+		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &6saved config.yml"));
 		saveResource("messages.yml", true);
+		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &6saved messages.yml"));
 		saveResource("chat.yml", true);
-		saveResource("scoreboard.yml", true);
+		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &6saved chat.yml"));
+		saveResource("tablist.yml", true);
+		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &6saved tablist.yml"));
+		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &cthe plugin has been disabled correctly!"));
+		
 	}
-
+	
+	public void importEvents() {
+		PluginManager pM = Bukkit.getPluginManager();
+		pM.registerEvents(new FireworkBuilder(this), this);
+		pM.registerEvents(new PlayerSettings(this), this);
+		pM.registerEvents(new PlayerTitle(this), this);
+		pM.registerEvents(new PlayerSound(this), this);
+		pM.registerEvents(new PlayerTeleport(this), this);
+		pM.registerEvents(new ServerNetworks(this), this);
+		pM.registerEvents(new PlayerLeft(this), this);
+		pM.registerEvents(new PlayerJoin(this), this);
+		pM.registerEvents(new PlayerChat(this), this);
+		pM.registerEvents(new ChatFilter(), this);
+		pM.registerEvents(new CommandsBlocked(), this);
+		pM.registerEvents(new ReproduceSoundToFlight(this), this);
+		pM.registerEvents(new TabListServer(this), this);
+		
+	}
+	
+	public void importCommands() {
+		this.getCommand("tp").setExecutor(new TeleportManager(this));
+		this.getCommand("vanish").setExecutor(new VanishManager(this));
+		this.getCommand("nick").setExecutor(new NickManager(this));
+		this.getCommand("custolobby").setExecutor(new CommandManager(this));
+		this.getCommand("fly").setExecutor(new FlightManager(this));
+		this.getCommand("setlobby").setExecutor(new CreateLocation(this));
+		this.getCommand("lobby").setExecutor(new GetLocation(this));
+		this.getCommand("gm").setExecutor(new GamemodeManager(this));
+		this.getCommand("help").setExecutor(new HelpCommand(this));
+		
+	}
+	
 	public FileConfiguration getMessages() {
 		if(messages == null) {
 			reloadMessages();
@@ -131,8 +144,8 @@ public class CustoLobby extends JavaPlugin {
 				YamlConfiguration defMessages = YamlConfiguration.loadConfiguration(defMessageStream);
 				messages.setDefaults(defMessages);
 			}
-		} catch(UnsupportedEncodingException exception) {
-			exception.printStackTrace();
+		} catch(UnsupportedEncodingException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -143,37 +156,6 @@ public class CustoLobby extends JavaPlugin {
 		}
 	}
 	
-	public FileConfiguration getScoreboard() {
-		if(scoreboard == null) {
-			reloadScoreboard();
-		}
-		return scoreboard;
-	}
-	
-	public void reloadScoreboard() {
-		if(scoreboard == null) {
-			scoreboardFile = new File(getDataFolder(), "scoreboard.yml");
-		}
-		scoreboard = YamlConfiguration.loadConfiguration(scoreboardFile);
-		Reader defScoreboardStream;
-		try {
-			defScoreboardStream = new InputStreamReader(this.getResource("scoreboard.yml"), "UTF8");
-			if(defScoreboardStream != null) {
-				YamlConfiguration defScoreboard = YamlConfiguration.loadConfiguration(defScoreboardStream);
-				scoreboard.setDefaults(defScoreboard);
-			}
-		} catch(UnsupportedEncodingException exception) {
-			exception.printStackTrace();
-		}
-	}
-	
-	public void loadScoreboard() {
-		scoreboardFile = new File(this.getDataFolder(), "scoreboard.yml");
-		if(!scoreboardFile.exists()) {
-			this.getScoreboard().options().copyDefaults(true);
-		}
-	}
-
 	public FileConfiguration getChat() {
 		if(chat == null) {
 			reloadChat();
@@ -193,11 +175,10 @@ public class CustoLobby extends JavaPlugin {
 				YamlConfiguration defChat = YamlConfiguration.loadConfiguration(defChatStream);
 				chat.setDefaults(defChat);
 			}
-		} catch(UnsupportedEncodingException exception) {
-			exception.printStackTrace();
+		} catch(UnsupportedEncodingException e) {
+			e.printStackTrace();
 		}
 	}
-
 	public void loadChat() {
 		chatFile = new File(this.getDataFolder(), "chat.yml");
 		if(!chatFile.exists()) {
@@ -205,106 +186,39 @@ public class CustoLobby extends JavaPlugin {
 		}
 	}
 	
-	public void importCommands() {
-		this.getCommand("custolobby").setExecutor(new CommandManager(this));
+	public FileConfiguration getTabList() {
+		if(tablist == null) {
+			reloadTabList();
+		}
+		return tablist;
 	}
 	
-	public void importEvents() {
-		PluginManager pM = Bukkit.getPluginManager();
-		pM.registerEvents(new ActionbarPlayer(this), this);
-		pM.registerEvents(new TitlePlayer(this), this);
-		pM.registerEvents(new SubtitlePlayer(this), this);
-		pM.registerEvents(new SoundPlayer(this), this);
-		pM.registerEvents(new WorldProtection(this), this);
-		pM.registerEvents(new FireworkBuilder(this), this);
-		pM.registerEvents(new JoinPlayer(this), this);
-		pM.registerEvents(new HoverLinkMessages(this), this);
-		pM.registerEvents(new SettingsPlayer(this), this);
-		pM.registerEvents(new WordsChatFilter(this), this);
-		pM.registerEvents(new BlacklistCommands(this), this);
-		pM.registerEvents(new QuitPlayer(this), this);
+	public void reloadTabList() {
+		if(tablist == null) {
+			tablistFile = new File(getDataFolder(), "tablist.yml");
+		}
+		tablist = YamlConfiguration.loadConfiguration(tablistFile);
+		Reader defTabStream;
+		try {
+			defTabStream = new InputStreamReader(this.getResource("tablist.yml"), "UTF8");
+			if(defTabStream != null) {
+				YamlConfiguration defTabList = YamlConfiguration.loadConfiguration(defTabStream);
+				tablist.setDefaults(defTabList);
+			}
+		} catch(UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public Actionbar getActionbar() {
-		return actionbar;
+	public void loadTabList() {
+		tablistFile = new File(this.getDataFolder(), "tablist.yml");
+		if(!tablistFile.exists()) {
+			this.getTabList().options().copyDefaults(true);
+		}
 	}
 	
-	public Title getTitle() {
-		return title;
+	public static CustoLobby getInstance() {
+		return instance;
 	}
-	
-	public Subtitle getSubtitle() {
-		return subtitle;
-	}
-	
-	private boolean setupVersions() {
-
-        String version;
-
-        try {
-
-            version = Bukkit.getBukkitVersion();
-
-        } catch (ArrayIndexOutOfBoundsException exception) {
-            return false;
-        }
-
-        Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &aYour server is running version &b" + version));
-
-        if (version.equals("1.8-R0.1-SNAPSHOT")) {
-            actionbar = new Actionbar_1_8_R1();
-            title = new Title_1_8_R1();
-            subtitle = new Subtitle_1_8_R1();
-        }
-        else if(version.equals("1.8.3-R0.1-SNAPSHOT")) {
-        	actionbar = new Actionbar_1_8_R2();
-        	title = new Title_1_8_R2();
-        	subtitle = new Subtitle_1_8_R2();
-        }
-        else if(version.equals("1.8.4-R0.1-SNAPSHOT")) {
-        	actionbar = new Actionbar_1_8_R3();
-        	title = new Title_1_8_R3();
-        	subtitle = new Subtitle_1_8_R3();
-        }
-        else if(version.equals("1.8.5-R0.1-SNAPSHOT")) {
-        	actionbar = new Actionbar_1_8_R3();
-        	title = new Title_1_8_R3();
-        	subtitle = new Subtitle_1_8_R3();
-        }
-        else if(version.equals("1.8.6-R0.1-SNAPSHOT")) {
-        	actionbar = new Actionbar_1_8_R3();
-        	title = new Title_1_8_R3();
-        	subtitle = new Subtitle_1_8_R3();
-        }
-        else if(version.equals("1.8.7-R0.1-SNAPSHOT")) {
-        	actionbar = new Actionbar_1_8_R3();
-        	title = new Title_1_8_R3();
-        	subtitle = new Subtitle_1_8_R3();
-        }
-        else if(version.equals("1.8.8-R0.1-SNAPSHOT")) {
-        	actionbar = new Actionbar_1_8_R3();
-        	title = new Title_1_8_R3();
-        	subtitle = new Subtitle_1_8_R3();
-        }
-        else if(version.equals("1.9-R0.1-SNAPSHOT")) {
-        	actionbar = new Actionbar_1_9_R1();
-        	title = new Title_1_9_R1();
-        	subtitle = new Subtitle_1_9_R1();
-        }
-        else if(version.equals("1.9.2-R0.1-SNAPSHOT")) {
-        	actionbar = new Actionbar_1_9_R2();
-        	title = new Title_1_9_R2();
-        	subtitle = new Subtitle_1_9_R2();
-        }
-        else if(version.equals("1.9.4-R0.1-SNAPSHOT")) {
-        	actionbar = new Actionbar_1_9_R2();
-        	title = new Title_1_9_R2();
-        	subtitle = new Subtitle_1_9_R2();
-        }
-       
-        return actionbar != null;
-    }
-	
-	public static CustoLobby getInstance() { return instance; }
 
 }

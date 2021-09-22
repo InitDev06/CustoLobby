@@ -1,0 +1,20 @@
+tablist:
+  header:
+    - "&a               yourServer.com"
+    - ""
+    - ""
+    - ""
+    - ""
+    - ""
+    - ""
+    - ""
+# this is a upper part of tablist.
+  footer:
+    - ""
+    - ""
+    - ""
+    - ""
+    - ""
+    - ""
+    - ""
+# this is a lower part of tablist

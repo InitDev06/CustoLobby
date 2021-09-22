@@ -1,36 +1,27 @@
+# Variables
+# %player_name% - Player Display Name
+# %message% - Player Display Message
+# %player_level% - Player Display Level
+# %world_name% - Player World Name
+# groups: this depends if the player have the permission (custolobby.chat, for the ranks) else is not, will use the "default"
+# filter: this words will be blocked when the player send a message inappropriated
+# cmd-blocked: this commands will be manteins blocked for the normal users
 enable-format: true
 enable-filter: true
-enable-blacklist: true
-# ==================
-# |  Chat-Formats  |
-# ==================
-# this formats will be use when the player send a message, if the player have the permission "custolobby.chat", will be use the format "rank", else is not, will be use the "default".
-formats: 
-  groups: 
-    rank: 
-      prefix: ""
-    default:
-      prefix: ""
-      
-# ==================
-# |  Words-Filter  |
-# ==================
-# this words will be prohibited on your server.     
-filter-list:
-  - L
-  - ez
-  - shit
-  - beach
-  - stupid
-  
-# ========================
-# |  Blacklist-Commands  |
-# ========================
-# this commands can't execute by user on the server.
-blacklist-cmds:
-  - plugins
-  - bukkit:ver
-  - bukkit:about
-  - stats
-  - op
-  - stop
+enable-cmdblock: true
+prefix:
+  formats:
+    groups: 
+      rank: "&9%world_name% &b%player_level% &r%vault_prefix% &e%player_name% &8- &f%message%"
+      default: "&9%world_name% &b%player_level% &7%player_name% &8- &f%message%"
+filter: 
+    - L
+    - izi
+    - nub
+cmd-blocked: 
+  - /plugins
+  - /about
+  - /ver
+  - /stats
+  - /op
+  - /?

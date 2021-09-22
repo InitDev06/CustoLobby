@@ -1,17 +1,19 @@
 messages: 
   must-be-player: "&cCannot execute by console"
   missing-permission: "&cYou can't execute this command!"
+  player-offline: "&cThis player is not online!"
+  missing-target: "&cInsert a target!"
 # =====================
 # |  Command-Manager  |
 # =====================
-  file-unknown: "&8[&eCustoLobby&8] &cThis file doesn't exists!"
-  unknown-args: "&8[&eCustoLobby&8] &cThis sub-command doesn't exists!"
-  args: "&8[&eCustoLobby&8] &fUse the command &a/cl help"
-  reload: "&8[&eCustoLobby&8] &fPlease specify the file to reload."
-  config: "&8[&eCustoLobby&8] &fThe file &aconfig.yml &fhas been reloaded."
-  messages: "&8[&eCustoLobby&8] &fThe file &amessages.yml &fhas been reloaded."
-  chat: "&8[&eCustoLobby&8] &fThe file &achat.yml &fhas been reloaded"
-  scoreboard: "&8[&eCustoLobby&8] &fThe file &ascoreboard.yml &fhas been reloaded"
+  file-unknown: "&8[&eCustoLobby&8] &cthis file doesn't exists!"
+  unknown-args: "&8[&eCustoLobby&8] &cthis sub-command doesn't exists!"
+  args: "&8[&eCustoLobby&8] &fuse the command &a/cl help"
+  reload: "&8[&eCustoLobby&8] &fplease specify the file to reload."
+  config: "&8[&eCustoLobby&8] &fthe file &aconfig.yml &fhas been reloaded."
+  messages: "&8[&eCustoLobby&8] &fthe file &amessages.yml &fhas been reloaded."
+  chat: "&8[&eCustoLobby&8] &fthe file &achat.yml &fhas been reloaded"
+  scoreboard: "&8[&eCustoLobby&8] &fthe file &ascoreboard.yml &fhas been reloaded"
 
 # ==============
 # |  Announce  |
@@ -26,9 +28,9 @@ messages:
     - ""
     - ""
     - ""
-  rank-join: "%vault_prefix% &e%player_name% &8- &fHas joined to server"
+  rank-join: "%vault_prefix% &e%player_name% &8- &fhas joined to server"
 # if the player have the permission "custolobby.join", will be send this message when join to server.
-  rank-quit: "%vault_prefix% &e%player_name% &8- &fIf has left the server"
+  rank-quit: "%vault_prefix% &e%player_name% &8- &fif has left the server"
 # if the player have the permission "custolobby.quit", will be send this message when left the server.
   social-networks:
     1:
@@ -52,36 +54,30 @@ messages:
 # |  Gamemode-Manager  |
 # ======================
 # this messages will be use on the command "/gm".
-  gm-usage: ""
-  gm-survival: ""
-  gm-creative: ""
-  gm-adventure: ""
-  gm-spectator: ""
-  gm-other-survival: ""
-  gm-other-creative: ""
-  gm-other-adventure: ""
-  gm-other-spectator: ""
-  gm-null: ""
+  gm-usage: "&8[&eCustoLobby&8] &fuse &b/gm <mode> &fto change your gamemode, or &a/gm <player> <mode> &fto other player."
+  gm-survival: "&8[&eCustoLobby&8] &fgamemode uploaded to &a&lSURVIVAL"
+  gm-creative: "&8[&eCustoLobby&8] &fgamemode uploaded to &a&lCREATIVE"
+  gm-adventure: "&8[&eCustoLobby&8] &fgamemode uploaded to &a&lADVENTURE"
+  gm-spectator: "&8[&eCustoLobby&8] &fgamemode uploaded to &a&lSPECTATOR"
+  gm-other-survival: "&8[&eCustoLobby&8] &fgamemode uploaded to &a&lSURVIVAL &ffor player &b%player_name%"
+  gm-other-creative: "&8[&eCustoLobby&8] &fgamemode uploaded to &a&lCREATIVE &ffor player &b%player_name%"
+  gm-other-adventure: "&8[&eCustoLobby&8] &fgamemode uploaded to &a&lADVENTURE &ffor player &b%player_name%"
+  gm-other-spectator: "&8[&eCustoLobby&8] &fgamemode uploaded to &a&lSPECTATOR &ffor player &b%player_name%"
+  gm-null: "&8[&eCustoLobby&8] &cthis gamemode doesn't exists."
   
 # ====================
 # |  Flight-Manager  |
 # ====================
-  flight-enable: ""
-  flight-disable: ""
-  flight-other-enable: ""
-  flight-other-disable: ""
+  flight-enable: "&8[&eCustoLobby&8] &fflight mode &aactivated"
+  flight-disable: "&8[&eCustoLobby&8] &fflight mode &cdeactivated"
+  flight-other-enable: "&8[&eCustoLobby&8] &fflight mode &aactivated &ffor the player &b%player_name"
+  flight-other-disable: "&8[&eCustoLobby&8] &fflight mode &cdeactivated &ffor the player &b%player_name"
   
 # ====================
 # |  Vanish-Manager  |
 # ====================
-  vanish-enable: ""
-  vanish-disable: ""
-
-# ===================
-# |  World-Manager  |
-# ===================
-  not-build: "&8[&eCustoLobby&8] &cYou can't build here!"
-  not-break: "&8[&eCustoLobby&8] &cYou can't break here!"
+  vanish-enable: "&8[&eCustoLobby&8] &fvanish mode &aactivated"
+  vanish-disable: "&8[&eCustoLobby&8] &fvanish mode &cdeactivated"
 
 # ==================
 # |  Chat-Manager  |
@@ -89,10 +85,36 @@ messages:
   blocked-command:
     - ""
     - ""
+    - "&cThis command has been blocked by the &c&lSTAFF"
     - ""
     - ""
   blocked-words:
     - ""
     - ""
+    - "&cYou can't use this word on you messages!"
     - ""
     - ""
+  help-message:
+    - ""
+    - ""
+    - ""
+    - ""
+    - ""
+
+# ===================
+# |  Lobby-Manager  |
+# ===================
+  lobby-setup: "&8[&eCustoLobby&8] &fthe lobby location has been saved correctly"
+  lobby-teleport: "&8[&eCustoLobby&8] &fhas been teleported to &bLobby"
+  lobby-unknown: "&8[&eCustoLobby&8] &cthis location doesn't exists!"
+  
+# ==================
+# |  Nick-Manager  |
+# ==================
+  nick-args: ""
+  new-nick: ""
+  
+# ======================
+# |  Teleport-Manager  |
+# ======================
+  teleported-to-target: ""

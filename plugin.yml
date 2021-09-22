@@ -2,14 +2,39 @@ main: net.custolobby.plugin.CustoLobby
 name: CustoLobby
 version: 1.0.1
 author: AISimple
-softdepends: [PlaceholderAPI]
+softdepend: [PlaceholderAPI]
 permissions:
   custolobby.*:
     children:
-      - custolobby.manager
-      - custolobby.join
+      - custolobby.teleport
+      - custolobby.build
       - custolobby.quit
+      - custolobby.join
+      - custolobby.chat
+      - custolobby.vanish
+      - custolobby.nick
+      - custolobby.manager
+      - custolobby.fly
+      - custolobby.setlobby
+      - custolobby.lobby
+      - custolobby.gamemode
+      
 commands:
-  custolobby:
-    aliases: [cl]
-    description: Principal Command
+  tp:
+    aliases: [teleport]
+  vanish:
+    aliases: [v, invisibility]
+  nick:
+    aliases: [name]
+  custolobby: 
+    aliases: [cl, clobby]
+  fly:
+    aliases: [flight]
+  setlobby:
+    aliases: [sethub, setspawn]
+  lobby:
+    aliases: [hub, spawn]
+  gm:
+    aliases: [gamemode]
+  help:
+    aliases: [h]
