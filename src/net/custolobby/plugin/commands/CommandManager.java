@@ -14,14 +14,13 @@ public class CommandManager implements CommandExecutor {
 
 	private CustoLobby plugin;
 	
-	public CommandManager(CustoLobby plugin)
-	{
+	public CommandManager(CustoLobby plugin) {
 		this.plugin = plugin;
 	}
 	
 	@Override
 	public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-		FileConfiguration messages = CustoLobby.getInstance().getMessages();
+		FileConfiguration messages = plugin.getMessages();
 		if(!(commandSender instanceof Player)) {
 			if(command.getName().equalsIgnoreCase("custolobby")) {
 				if(Bukkit.getConsoleSender().hasPermission("custolobby.manager") || Bukkit.getConsoleSender().isOp()) {
