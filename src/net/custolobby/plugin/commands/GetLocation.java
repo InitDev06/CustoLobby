@@ -33,9 +33,7 @@ public class GetLocation implements CommandExecutor {
 			
 			if(command.getName().equalsIgnoreCase("lobby")) {
 				if(player.hasPermission("custolobby.lobby") || player.isOp()) {
-					if(!config.contains("lobby-point.world")) {
-						player.sendMessage(Color.translate(messages.getString("messages.lobby-unknown")));
-					} else {
+					if(config.contains("lobby-point.world")) {
 						Double x = Double.valueOf(config.getInt("lobby-point.x"));
 						Double y = Double.valueOf(config.getInt("lobby-point.y"));
 						Double z = Double.valueOf(config.getInt("lobby-point.z"));
@@ -49,6 +47,8 @@ public class GetLocation implements CommandExecutor {
 						
 						player.teleport(location);
 						player.sendMessage(Color.translate(messages.getString("messages.lobby-teleport")));
+					} else {
+						player.sendMessage(Color.translate(messages.getString("messages.lobby-unknown")));
 						return true;
 					}
 				} else {

@@ -63,46 +63,9 @@ public class GamemodeManager implements CommandExecutor {
 					player.sendMessage(Color.translate(messages.getString("messages.gm-null")));
 					return true;
 					
-				} else if(!player.hasPermission("custolobby.gm.others") || !player.isOp()) {
+				} else {
 					player.sendMessage(Color.translate(messages.getString("messages.missing-permission")));
-					
-					if(args.length == 1) {
-						Player target = Bukkit.getServer().getPlayer(args[1]);
-						if(target == null) {
-							player.sendMessage(Color.translate(messages.getString("messages.player-offline")));
-						} else {
-							if(args[0].equalsIgnoreCase("survival") || args[0].equals("0")){
-								player.setGameMode(GameMode.SURVIVAL);
-								player.sendMessage(Color.translate(messages.getString("messages.gm-other-survival")).replaceAll("%player_name%"
-										, player.getName()));
-								return true;
-							}
-							
-							if(args[0].equalsIgnoreCase("creative") || args[0].equals("1")){
-								player.setGameMode(GameMode.CREATIVE);
-								player.sendMessage(Color.translate(messages.getString("messages.gm-other-creative")).replaceAll("%player_name%"
-												, player.getName()));
-								return true;
-							}
-							
-							if(args[0].equalsIgnoreCase("adventure") || args[0].equals("2")){
-								player.setGameMode(GameMode.ADVENTURE);
-								player.sendMessage(Color.translate(messages.getString("messages.gm-other-adventure")).replaceAll("%player_name%"
-										, player.getName()));
-								return true;
-							}
-							
-							if(args[0].equalsIgnoreCase("spectator") || args[0].equals("3")){
-								player.setGameMode(GameMode.SPECTATOR);
-								player.sendMessage(Color.translate(messages.getString("messages.gm-other-spectator")).replaceAll("%player_name%"
-										, player.getName()));
-								return true;
-							}
-							
-							player.sendMessage(Color.translate(messages.getString("messages.gm-null")));
-							return true;
-						}
-					}
+					return true;
 				}
 			}
 		}

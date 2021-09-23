@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.potion.PotionEffectType;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.custolobby.plugin.CustoLobby;
@@ -27,6 +28,10 @@ public class PlayerLeft implements Listener {
 					.replaceAll("%player_name%", player.getDisplayName()));
 		} else {
 			event.setQuitMessage(null);
+		}
+		
+		if(player.hasPotionEffect(PotionEffectType.SPEED)) {
+			player.removePotionEffect(PotionEffectType.SPEED);
 		}
 	}
 

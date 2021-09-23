@@ -22,6 +22,8 @@ import net.custolobby.plugin.commands.HelpCommand;
 import net.custolobby.plugin.commands.NickManager;
 import net.custolobby.plugin.commands.TeleportManager;
 import net.custolobby.plugin.commands.VanishManager;
+import net.custolobby.plugin.listeners.ClearToJoin;
+import net.custolobby.plugin.listeners.PlayerActionbar;
 import net.custolobby.plugin.listeners.PlayerChat;
 import net.custolobby.plugin.listeners.PlayerJoin;
 import net.custolobby.plugin.listeners.PlayerLeft;
@@ -31,7 +33,6 @@ import net.custolobby.plugin.listeners.PlayerTeleport;
 import net.custolobby.plugin.listeners.PlayerTitle;
 import net.custolobby.plugin.listeners.ReproduceSoundToFlight;
 import net.custolobby.plugin.listeners.ServerNetworks;
-import net.custolobby.plugin.listeners.TabListServer;
 import net.custolobby.plugin.utility.ChatFilter;
 import net.custolobby.plugin.utility.CommandsBlocked;
 import net.custolobby.plugin.utility.FireworkBuilder;
@@ -45,9 +46,6 @@ public class CustoLobby extends JavaPlugin {
 	
 	private FileConfiguration chat;
 	private File chatFile;
-	
-	private FileConfiguration tablist;
-	private File tablistFile;
 	
 	PluginDescriptionFile pdf = getDescription();
 	
@@ -67,8 +65,6 @@ public class CustoLobby extends JavaPlugin {
 		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &eloaded messages.yml"));
 		saveResource("chat.yml", false);
 		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &eloaded chat.yml"));
-		saveResource("tablist.yml", false);
-		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &eloaded tablist.yml"));
 		
 		importEvents();
 		importCommands();
@@ -88,8 +84,6 @@ public class CustoLobby extends JavaPlugin {
 		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &6saved messages.yml"));
 		saveResource("chat.yml", true);
 		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &6saved chat.yml"));
-		saveResource("tablist.yml", true);
-		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &6saved tablist.yml"));
 		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &cthe plugin has been disabled correctly!"));
 		
 	}
@@ -99,16 +93,17 @@ public class CustoLobby extends JavaPlugin {
 		pM.registerEvents(new FireworkBuilder(this), this);
 		pM.registerEvents(new PlayerSettings(this), this);
 		pM.registerEvents(new PlayerTitle(this), this);
+		pM.registerEvents(new PlayerActionbar(this), this);
 		pM.registerEvents(new PlayerSound(this), this);
 		pM.registerEvents(new PlayerTeleport(this), this);
-		pM.registerEvents(new ServerNetworks(this), this);
 		pM.registerEvents(new PlayerLeft(this), this);
+		pM.registerEvents(new ClearToJoin(), this);
 		pM.registerEvents(new PlayerJoin(this), this);
+		pM.registerEvents(new ServerNetworks(this), this);
 		pM.registerEvents(new PlayerChat(this), this);
-		pM.registerEvents(new ChatFilter(), this);
-		pM.registerEvents(new CommandsBlocked(), this);
+		pM.registerEvents(new ChatFilter(this), this);
+		pM.registerEvents(new CommandsBlocked(this), this);
 		pM.registerEvents(new ReproduceSoundToFlight(this), this);
-		pM.registerEvents(new TabListServer(this), this);
 		
 	}
 	
@@ -183,37 +178,6 @@ public class CustoLobby extends JavaPlugin {
 		chatFile = new File(this.getDataFolder(), "chat.yml");
 		if(!chatFile.exists()) {
 			this.getChat().options().copyDefaults(true);
-		}
-	}
-	
-	public FileConfiguration getTabList() {
-		if(tablist == null) {
-			reloadTabList();
-		}
-		return tablist;
-	}
-	
-	public void reloadTabList() {
-		if(tablist == null) {
-			tablistFile = new File(getDataFolder(), "tablist.yml");
-		}
-		tablist = YamlConfiguration.loadConfiguration(tablistFile);
-		Reader defTabStream;
-		try {
-			defTabStream = new InputStreamReader(this.getResource("tablist.yml"), "UTF8");
-			if(defTabStream != null) {
-				YamlConfiguration defTabList = YamlConfiguration.loadConfiguration(defTabStream);
-				tablist.setDefaults(defTabList);
-			}
-		} catch(UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void loadTabList() {
-		tablistFile = new File(this.getDataFolder(), "tablist.yml");
-		if(!tablistFile.exists()) {
-			this.getTabList().options().copyDefaults(true);
 		}
 	}
 	

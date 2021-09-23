@@ -32,7 +32,9 @@ public class PlayerSettings implements Listener {
 		player.setGameMode(GameMode.ADVENTURE);
 		
 		if(config.getBoolean("give-speed")) {
-			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 0));
+			if(!player.hasPotionEffect(PotionEffectType.SPEED)) {
+				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 1));
+			}
 		}
 		
 	}

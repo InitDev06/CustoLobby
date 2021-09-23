@@ -22,20 +22,21 @@ public class PlayerTeleport implements Listener {
 	public void onJoin(PlayerJoinEvent event) {
 		FileConfiguration config = plugin.getConfig();
 		Player player = event.getPlayer();
-		if(config.contains("lobby-point.world")) {
-			double x = Double.valueOf(config.getInt("lobby-point.x"));
-			double y = Double.valueOf(config.getInt("lobby-point.y"));
-			double z = Double.valueOf(config.getInt("lobby-point.z"));
-			
-			float yaw = Float.valueOf(config.getInt("lobby-point.yaw"));
-			float pitch = Float.valueOf(config.getInt("lobby-point.pitch"));
-			
-			World world = plugin.getServer().getWorld(config.getString("lobby-point.world"));
-			
-			Location location = new Location(world, x, y, z, yaw, pitch);
-			
+		Double x = Double.valueOf(config.getInt("lobby-point.x"));
+		Double y = Double.valueOf(config.getInt("lobby-point.y"));
+		Double z = Double.valueOf(config.getInt("lobby-point.z"));
+		
+		Float yaw = Float.valueOf(config.getInt("lobby-point.yaw"));
+		Float pitch = Float.valueOf(config.getInt("lobby-point.pitch"));
+		
+		World world = plugin.getServer().getWorld(config.getString("lobby-point.world"));
+		
+		Location location = new Location(world, x, y, z, yaw, pitch);
+		
+		if(world != null) {
 			player.teleport(location);
 		}
+		
 	}
 
 }

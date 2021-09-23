@@ -54,7 +54,7 @@ messages:
 # |  Gamemode-Manager  |
 # ======================
 # this messages will be use on the command "/gm".
-  gm-usage: "&8[&eCustoLobby&8] &fuse &b/gm <mode> &fto change your gamemode, or &a/gm <player> <mode> &fto other player."
+  gm-usage: "&8[&eCustoLobby&8] &fuse &b/gm <mode> &fto change your gamemode."
   gm-survival: "&8[&eCustoLobby&8] &fgamemode uploaded to &a&lSURVIVAL"
   gm-creative: "&8[&eCustoLobby&8] &fgamemode uploaded to &a&lCREATIVE"
   gm-adventure: "&8[&eCustoLobby&8] &fgamemode uploaded to &a&lADVENTURE"
@@ -111,10 +111,10 @@ messages:
 # ==================
 # |  Nick-Manager  |
 # ==================
-  nick-args: ""
-  new-nick: ""
+  nick-args: "&8[&eCustoLobby&8] 8cinsert a new nick!"
+  new-nick: "&8[&eCustoLobby&8] &fyour new nick is &b%new_nick%"
   
 # ======================
 # |  Teleport-Manager  |
 # ======================
-  teleported-to-target: ""
+  teleported-to-target: "&8[&eCustoLobby&8] &fhas been teleported to &b%target_name%"

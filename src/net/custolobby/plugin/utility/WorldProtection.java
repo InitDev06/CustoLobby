@@ -13,6 +13,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
@@ -30,10 +31,11 @@ public class WorldProtection implements Listener {
 	public void onPlace(BlockPlaceEvent event) {
 		FileConfiguration config = plugin.getConfig();
 		Player player = event.getPlayer();
-		if(config.getBoolean("build") == false) {
-			if(!player.hasPermission("custolobby.build") || !player.isOp()) {
-				event.setCancelled(true);
-			}
+		if(config.getBoolean("disable-build")) {
+			event.setCancelled(true);
+		} else if(player.hasPermission("custolobby.build") || player.isOp()) {
+			event.setCancelled(false);
+			event.setBuild(true);
 		}
 	}
 	
@@ -41,17 +43,17 @@ public class WorldProtection implements Listener {
 	public void onBreak(BlockBreakEvent event) {
 		FileConfiguration config = plugin.getConfig();
 		Player player = event.getPlayer();
-		if(config.getBoolean("build") == false) {
-			if(!player.hasPermission("custolobby.build") || !player.isOp()) {
-				event.setCancelled(true);
-			}
+		if(config.getBoolean("disable-build")) {
+			event.setCancelled(true);
+		} else if(player.hasPermission("custolobby.build") || player.isOp()) {
+			event.setCancelled(false);
 		}
 	}
 	
 	@EventHandler
 	public void onDamaged(EntityDamageEvent event) {
 		FileConfiguration config = plugin.getConfig();
-		if(config.getBoolean("damage") == false) {
+		if(config.getBoolean("disable-damage")) {
 			event.setCancelled(true);
 		}
 	}
@@ -59,7 +61,7 @@ public class WorldProtection implements Listener {
 	@EventHandler
 	public void damagedByEntity(EntityDamageByEntityEvent event) {
 		FileConfiguration config = plugin.getConfig();
-		if(config.getBoolean("damage") == false) {
+		if(config.getBoolean("disable-damage")) {
 			event.setCancelled(true);
 		}
 	}
@@ -67,7 +69,7 @@ public class WorldProtection implements Listener {
 	@EventHandler
 	public void damagedByBlock(EntityDamageByBlockEvent event) {
 		FileConfiguration config = plugin.getConfig();
-		if(config.getBoolean("damage") == false) {
+		if(config.getBoolean("disable-damage")) {
 			event.setCancelled(true);
 		}
 	}
@@ -75,7 +77,7 @@ public class WorldProtection implements Listener {
 	@EventHandler
 	public void onHunger(FoodLevelChangeEvent event) {
 		FileConfiguration config = plugin.getConfig();
-		if(config.getBoolean("hunger") == false) {
+		if(config.getBoolean("disable-hunger")) {
 			event.setCancelled(true);
 		}
 	}
@@ -83,7 +85,7 @@ public class WorldProtection implements Listener {
 	@EventHandler
 	public void onWeather(WeatherChangeEvent event) {
 		FileConfiguration config = plugin.getConfig();
-		if(config.getBoolean("weather") == false) {
+		if(config.getBoolean("disable-weather")) {
 			World world = plugin.getServer().getWorld(config.getString("lobby-point.world"));
 			
 			event.setCancelled(true);
@@ -95,7 +97,7 @@ public class WorldProtection implements Listener {
 	@EventHandler
 	public void onSpawnEntities(EntitySpawnEvent event) {
 		FileConfiguration config = plugin.getConfig();
-		if(config.getBoolean("entities") == false) {
+		if(config.getBoolean("disable-entities")) {
 			World world = plugin.getServer().getWorld(config.getString("lobby-point.world"));
 			
 			event.setCancelled(true);
@@ -119,9 +121,17 @@ public class WorldProtection implements Listener {
 		
 		Location location = new Location(world, x, y, z, yaw, pitch);
 		if(event.getTo().getY() < 0) {
-			if(world != null) {
+			if(config.contains("lobby-point.world")) {
 				event.getPlayer().teleport(location);
 			}
+		}
+	}
+	
+	@EventHandler
+	public void onInteract(PlayerInteractEvent event) {
+		FileConfiguration config = plugin.getConfig();
+		if(config.getBoolean("disable-interact")) {
+			event.setCancelled(true);
 		}
 	}
 	
