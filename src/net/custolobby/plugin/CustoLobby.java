@@ -36,6 +36,7 @@ import net.custolobby.plugin.listeners.ServerNetworks;
 import net.custolobby.plugin.utility.ChatFilter;
 import net.custolobby.plugin.utility.CommandsBlocked;
 import net.custolobby.plugin.utility.FireworkBuilder;
+import net.custolobby.plugin.utility.WorldProtection;
 
 public class CustoLobby extends JavaPlugin {
 	
@@ -47,6 +48,9 @@ public class CustoLobby extends JavaPlugin {
 	private FileConfiguration chat;
 	private File chatFile;
 	
+	// private FileConfiguration tablist;
+	// private File tablistFile;
+	
 	PluginDescriptionFile pdf = getDescription();
 	
 	public final String VERSION = pdf.getVersion();
@@ -55,22 +59,28 @@ public class CustoLobby extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &floading components.."));
+		importEvents();
+		importCommands();
 		loadMessages();
 		loadChat();
 		getConfig().options().copyDefaults(true);
 		getConfig().options().copyHeader(true);
 		saveDefaultConfig();
 		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &eloaded config.yml"));
-		saveResource("messages.yml", false);
-		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &eloaded messages.yml"));
-		saveResource("chat.yml", false);
-		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &eloaded chat.yml"));
-		
-		importEvents();
-		importCommands();
-		
-		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &fversion on running &a" + VERSION));
-		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &frunning on Spigot/Paper &b" + SPIGOT));
+		if(getResource("messages.yml") != null && getResource("chat.yml") != null) {
+			saveResource("messages.yml", true);
+			saveResource("chat.yml", true);
+			Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &eloaded messages.yml"));
+			Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &eloaded chat.yml"));
+		} else {
+			saveResource("chat.yml", false);
+			saveResource("messages.yml", false);
+			Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &eloaded messages.yml"));
+			Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &eloaded chat.yml"));
+		}
+
+		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &floading dependencies.."));
+		verifyDependencies();
 
 	}
 	
@@ -86,6 +96,22 @@ public class CustoLobby extends JavaPlugin {
 		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &6saved chat.yml"));
 		Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &cthe plugin has been disabled correctly!"));
 		
+	}
+	
+	public void verifyDependencies() {
+		if(getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
+			Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &ffounded dependency &bPlaceholderAPI"));
+		} else {
+			Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &fnot founded dependency &bPlaceholderAPI"));
+		}
+		
+		if(getServer().getPluginManager().getPlugin("TitleAPI") != null && getServer().getPluginManager().getPlugin("ActionBarAPI") != null) {
+			Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &ffounded neccesary dependencies &aTitleAPI & ActionBarAPI"));
+		} else {
+			Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &fnot available neccesary dependencies &aTitleAPI & ActionBarAPI"));
+			Bukkit.getPluginManager().disablePlugin(this);
+		}
+			
 	}
 	
 	public void importEvents() {
@@ -104,6 +130,7 @@ public class CustoLobby extends JavaPlugin {
 		pM.registerEvents(new ChatFilter(this), this);
 		pM.registerEvents(new CommandsBlocked(this), this);
 		pM.registerEvents(new ReproduceSoundToFlight(this), this);
+		pM.registerEvents(new WorldProtection(this), this);
 		
 	}
 	
@@ -170,10 +197,11 @@ public class CustoLobby extends JavaPlugin {
 				YamlConfiguration defChat = YamlConfiguration.loadConfiguration(defChatStream);
 				chat.setDefaults(defChat);
 			}
-		} catch(UnsupportedEncodingException e) {
-			e.printStackTrace();
+		} catch(UnsupportedEncodingException exception) {
+			exception.printStackTrace();
 		}
 	}
+	
 	public void loadChat() {
 		chatFile = new File(this.getDataFolder(), "chat.yml");
 		if(!chatFile.exists()) {

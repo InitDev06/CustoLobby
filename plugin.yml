@@ -2,7 +2,8 @@ main: net.custolobby.plugin.CustoLobby
 name: CustoLobby
 version: 1.0.1
 author: AISimple
-softdepend: [PlaceholderAPI]
+softdepends: [PlaceholderAPI]
+depends: [TitleAPI, ActionBarAPI]
 permissions:
   custolobby.*:
     children:
@@ -18,6 +19,9 @@ permissions:
       - custolobby.setlobby
       - custolobby.lobby
       - custolobby.gamemode
+      - custolobby.filter.bypass
+      - custolobby.blacklist.bypass
+      - custolobby.fireworks
       
 commands:
   tp:

@@ -13,7 +13,6 @@ messages:
   config: "&8[&eCustoLobby&8] &fthe file &aconfig.yml &fhas been reloaded."
   messages: "&8[&eCustoLobby&8] &fthe file &amessages.yml &fhas been reloaded."
   chat: "&8[&eCustoLobby&8] &fthe file &achat.yml &fhas been reloaded"
-  scoreboard: "&8[&eCustoLobby&8] &fthe file &ascoreboard.yml &fhas been reloaded"
 
 # ==============
 # |  Announce  |
@@ -22,12 +21,14 @@ messages:
   title: "&a&lv1.0.1"
   subtitle: "&8- &eSpigotMC"
   motd:
+    - "&7&m------------------------------------"
     - ""
+    - "&e              CustoLobby &6v&a%version%"
     - ""
+    - "&f         Support for the servers with:"
+    - "            &6SpigotMC &c& &bPaperSpigot"
     - ""
-    - ""
-    - ""
-    - ""
+    - "&7&m------------------------------------"
   rank-join: "%vault_prefix% &e%player_name% &8- &fhas joined to server"
 # if the player have the permission "custolobby.join", will be send this message when join to server.
   rank-quit: "%vault_prefix% &e%player_name% &8- &fif has left the server"

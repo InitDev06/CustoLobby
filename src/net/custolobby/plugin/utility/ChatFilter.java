@@ -25,19 +25,23 @@ public class ChatFilter implements Listener {
 		FileConfiguration messages = plugin.getMessages();
 		FileConfiguration chat = plugin.getChat();
 		if(chat.getBoolean("enable-filter")) {
-			List<String> filter_list = chat.getStringList("filter-list");
-            for(int i = 0 ; i < filter_list.size(); i++){
-                String filters = filter_list.get(i);
-                if(event.getMessage().equalsIgnoreCase(filters)){
-                    event.setCancelled(true);
+			if(!player.hasPermission("custolobby.filter.bypass") || !player.isOp()) {
+				List<String> filter_list = chat.getStringList("filter-list");
+	            for(int i = 0 ; i < filter_list.size(); i++){
+	                String filters = filter_list.get(i);
+	                if(event.getMessage().equalsIgnoreCase(filters)){
+	                    event.setCancelled(true);
 
-                    List<String> filter_message = messages.getStringList("messages.blocked-words");
-                    for(int c = 0 ; c < filter_message.size(); c++){
-                        String filter = Color.translate(filter_message.get(c));
-                        player.sendMessage(filter);
-                    }
-                }
-            }
+	                    List<String> filter_message = messages.getStringList("messages.blocked-words");
+	                    for(int c = 0 ; c < filter_message.size(); c++){
+	                        String filter = Color.translate(filter_message.get(c));
+	                        player.sendMessage(filter);
+	                    }
+	                }
+	            }
+			} else {
+				return;
+			}
 		}
 	}
 

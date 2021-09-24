@@ -8,7 +8,7 @@ enable-blacklist: true
 formats: 
   groups: 
     rank: 
-      prefix: "&9%world_name% &b%player_level% &r%vault_prefix% &e%player_name% &8- &f%message%"
+      prefix: "&9%world_name% &b%player_level% %vault_prefix% &e%player_name% &8- &f%message%"
     default:
       prefix: "&9%world_name% &b%player_level% &7%player_name% &8- &f%message%"
       

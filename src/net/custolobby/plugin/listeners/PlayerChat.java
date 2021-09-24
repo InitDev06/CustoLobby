@@ -17,24 +17,24 @@ public class PlayerChat implements Listener {
 	public PlayerChat(CustoLobby plugin) {
 		this.plugin = plugin;
 	}
-	
+
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent event) {
 		FileConfiguration chat = plugin.getChat();
 		Player player = event.getPlayer();
 		if(chat.getBoolean("enable-format")) {
-			if(!player.hasPermission("custolobby.chat") || !player.isOp()) {
-				event.setFormat(Color.translate(PlaceholderAPI.setPlaceholders(player, chat.getString("formats.groups.default.prefix")))
-						.replaceAll("%player_name%", player.getDisplayName())
-						.replaceAll("%message%", event.getMessage())
-						.replaceAll("%world_name%", player.getWorld().getName())
-						.replaceAll("%player_level%", "%player_level%"));
-			} else {
+			if(player.hasPermission("custolobby.chat") || player.isOp()) {
 				event.setFormat(Color.translate(PlaceholderAPI.setPlaceholders(player, chat.getString("formats.groups.rank.prefix")))
 						.replaceAll("%player_name%", player.getDisplayName())
 						.replaceAll("%message%", event.getMessage())
 						.replaceAll("%world_name%", player.getWorld().getName())
-						.replaceAll("%player_level%", "%player_level%"));
+						.replaceAll("%level%", String.valueOf(player.getLevel())));
+			} else {
+				event.setFormat(Color.translate(PlaceholderAPI.setPlaceholders(player, chat.getString("formats.groups.default.prefix")))
+						.replaceAll("%player_name%", player.getDisplayName())
+						.replaceAll("%message%", event.getMessage())
+						.replaceAll("%world_name%", player.getWorld().getName())
+						.replaceAll("%level%", String.valueOf(player.getLevel())));
 			}
 		}
 	}

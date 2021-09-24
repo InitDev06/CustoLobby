@@ -40,6 +40,7 @@ public class NickManager implements CommandExecutor {
 						player.setCustomNameVisible(true);
 						player.setCustomName(new_name);
 						player.setDisplayName(new_name);
+						player.setPlayerListName(new_name);
 						player.sendMessage(Color.translate(messages.getString("messages.new-nick")).replaceAll("%new_nick%", new_name));
 						return true;
 					}

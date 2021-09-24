@@ -41,7 +41,7 @@ public class PlayerJoin implements Listener {
 		if(config.getBoolean("send-motd")) {
 			List<String> lore = messages.getStringList("messages.motd");
 			for(int i = 0 ; i < lore.size(); i ++) {
-				String motd = Color.translate(lore.get(i));
+				String motd = Color.translate(lore.get(i).replaceAll("%version%", plugin.VERSION));
 				
 				player.sendMessage(motd);
 			}
