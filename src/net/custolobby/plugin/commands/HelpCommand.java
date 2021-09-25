@@ -16,27 +16,23 @@ public class HelpCommand implements CommandExecutor {
 	
 	private CustoLobby plugin;
 	
-	public HelpCommand(CustoLobby plugin)
-	{
+	public HelpCommand(CustoLobby plugin) {
 		this.plugin = plugin;
 	}
 
 	@Override
 	public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
 		FileConfiguration messages = plugin.getMessages();
-		if(!(commandSender instanceof Player))
-		{
+		if(!(commandSender instanceof Player)) {
 			Bukkit.getConsoleSender().sendMessage(Color.translate(messages.getString("messages.must-be-player")));
 			return false;
-		}
-		else {
+			
+		} else {
 			Player player = (Player) commandSender;
 			
-			if(command.getName().equalsIgnoreCase("help"))
-			{
+			if(command.getName().equalsIgnoreCase("help")) {
 				List<String> lore = messages.getStringList("messages.help-message");
-				for(int i = 0 ; i < lore.size(); i++)
-				{
+				for(int i = 0 ; i < lore.size(); i++) {
 					String help = Color.translate(lore.get(i));
 					
 					player.sendMessage(help);

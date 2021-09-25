@@ -31,7 +31,6 @@ import net.custolobby.plugin.listeners.PlayerSettings;
 import net.custolobby.plugin.listeners.PlayerSound;
 import net.custolobby.plugin.listeners.PlayerTeleport;
 import net.custolobby.plugin.listeners.PlayerTitle;
-import net.custolobby.plugin.listeners.ReproduceSoundToFlight;
 import net.custolobby.plugin.listeners.ServerNetworks;
 import net.custolobby.plugin.utility.ChatFilter;
 import net.custolobby.plugin.utility.CommandsBlocked;
@@ -129,7 +128,6 @@ public class CustoLobby extends JavaPlugin {
 		pM.registerEvents(new PlayerChat(this), this);
 		pM.registerEvents(new ChatFilter(this), this);
 		pM.registerEvents(new CommandsBlocked(this), this);
-		pM.registerEvents(new ReproduceSoundToFlight(this), this);
 		pM.registerEvents(new WorldProtection(this), this);
 		
 	}

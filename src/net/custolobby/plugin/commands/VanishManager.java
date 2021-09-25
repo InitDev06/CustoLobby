@@ -48,7 +48,8 @@ public class VanishManager implements CommandExecutor {
 						player.sendMessage(Color.translate(messages.getString("messages.vanish-enable")));
 					}
 				} else {
-					player.sendMessage(Color.translate(messages.getString("messages.missing-permission")));
+					player.sendMessage(Color.translate(messages.getString("messages.missing-permission")).replaceAll("%permission%", 
+							"custolobby.vanish"));
 					return true;
 				}
 			}

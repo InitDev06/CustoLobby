@@ -84,7 +84,8 @@ public class CommandManager implements CommandExecutor {
 					return true;
 					
 				} else {
-					Bukkit.getConsoleSender().sendMessage(Color.translate(messages.getString("messages.missing-permission")));
+					Bukkit.getConsoleSender().sendMessage(Color.translate(messages.getString("messages.missing-permission")).replaceAll(
+							"%permission%", "custolobby.manager"));
 					return true;
 				}
 			}
@@ -154,7 +155,8 @@ public class CommandManager implements CommandExecutor {
 					return true;
 					
 				} else {
-					player.sendMessage(Color.translate(messages.getString("messages.missing-permission")));
+					player.sendMessage(Color.translate(messages.getString("messages.missing-permission")).replaceAll("%permission%", 
+							"custolobby.manager"));
 					return true;
 				}
 			}

@@ -46,7 +46,8 @@ public class NickManager implements CommandExecutor {
 					}
 					
 				} else {
-					player.sendMessage(Color.translate(messages.getString("messages.missing-permission")));
+					player.sendMessage(Color.translate(messages.getString("messages.missing-permission")).replaceAll("%permission%", 
+							"custolobby.nick"));
 					return true;
 				}
 			}

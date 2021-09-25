@@ -25,21 +25,22 @@ public class CommandsBlocked implements Listener {
 		FileConfiguration messages = plugin.getMessages();
 		FileConfiguration chat = plugin.getChat();
 		if(chat.getBoolean("enable-blacklist")) {
-			if(!player.hasPermission("custolobby.blacklist.bypass") || !player.isOp()) {
-				List<String> blacklist = chat.getStringList("blacklist-cmds");
-	            for(int i = 0 ; i < blacklist.size(); i++){
-	                String blocked_cmds = blacklist.get(i);
-	                if(event.getMessage().equalsIgnoreCase(blocked_cmds)){
-	                    event.setCancelled(true);
-
-	                    List<String> blocked_message = messages.getStringList("messages.blocked-command");
-	                    for(int c = 0 ; c < blocked_message.size(); c++){
-	                        String blocked = Color.translate(blocked_message.get(c));
-	                        player.sendMessage(blocked);
-	                    }
-	                }
-	            }
+			if(player.hasPermission("custolobby.blacklist.bypass") || player.isOp()) {
+				return;
 			}
+			List<String> blacklist = chat.getStringList("blacklist-cmds");
+            for(int i = 0 ; i < blacklist.size(); i++){
+                String blocked_cmds = blacklist.get(i);
+                if(event.getMessage().equalsIgnoreCase(blocked_cmds)){
+                    event.setCancelled(true);
+
+                    List<String> blocked_message = messages.getStringList("messages.blocked-command");
+                    for(int c = 0 ; c < blocked_message.size(); c++){
+                        String blocked = Color.translate(blocked_message.get(c));
+                        player.sendMessage(blocked);
+                    }
+                }
+            }
 		}
 	}
 

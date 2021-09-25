@@ -1,6 +1,6 @@
 messages: 
   must-be-player: "&cCannot execute by console"
-  missing-permission: "&cYou can't execute this command!"
+  missing-permission: "&cYou don't have the permission &e%permission%&c!"
   player-offline: "&cThis player is not online!"
   missing-target: "&cInsert a target!"
 # =====================
@@ -23,10 +23,10 @@ messages:
   motd:
     - "&7&m------------------------------------"
     - ""
-    - "&e              CustoLobby &6v&a%version%"
+    - "&e     CustoLobby &6v&a%version%"
     - ""
-    - "&f         Support for the servers with:"
-    - "            &6SpigotMC &c& &bPaperSpigot"
+    - "&f    Support for the servers with:"
+    - "        &6SpigotMC &8& &bPaperMC"
     - ""
     - "&7&m------------------------------------"
   rank-join: "%vault_prefix% &e%player_name% &8- &fhas joined to server"
@@ -96,26 +96,32 @@ messages:
     - ""
     - ""
   help-message:
+    - "&b&lSUPPORT &8- &fIf you need help or have questions," 
+    - "can join to discord server."
     - ""
-    - ""
-    - ""
-    - ""
-    - ""
+    - "&9&lDISCORD &ehttps://discord.yourServer.com"
 
 # ===================
 # |  Lobby-Manager  |
 # ===================
-  lobby-setup: "&8[&eCustoLobby&8] &fthe lobby location has been saved correctly"
+  lobby-setup: "&8[&eCustoLobby&8] &fthe lobby location has been &asaved &fcorrectly"
   lobby-teleport: "&8[&eCustoLobby&8] &fhas been teleported to &bLobby"
   lobby-unknown: "&8[&eCustoLobby&8] &cthis location doesn't exists!"
   
 # ==================
 # |  Nick-Manager  |
 # ==================
-  nick-args: "&8[&eCustoLobby&8] 8cinsert a new nick!"
+  nick-args: "&8[&eCustoLobby&8] &cinsert a new nick!"
   new-nick: "&8[&eCustoLobby&8] &fyour new nick is &b%new_nick%"
   
 # ======================
 # |  Teleport-Manager  |
 # ======================
   teleported-to-target: "&8[&eCustoLobby&8] &fhas been teleported to &b%target_name%"
+  
+# ===================
+# |  World-Manager  |
+# ===================
+  not-build: "&8[&aWorld&8] &cyou can't build here!"
+  not-break: "&8[&aWorld&8] &cyou can't break here!"
+  

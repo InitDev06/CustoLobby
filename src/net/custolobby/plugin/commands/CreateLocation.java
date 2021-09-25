@@ -30,14 +30,14 @@ public class CreateLocation implements CommandExecutor {
 			Player player = (Player) commandSender;
 			
 			if(command.getName().equalsIgnoreCase("setlobby")) {
-				if(player.hasPermission("custolobby.setlobby") || !player.isOp()) {
+				if(player.hasPermission("custolobby.setlobby") || player.isOp()) {
 					FileConfiguration config = plugin.getConfig();
 					
 					Location location = player.getLocation();
 					
-					double x = location.getX();
-					double y = location.getY();
-					double z = location.getZ();
+					double x = location.getBlockX();
+					double y = location.getBlockY();
+					double z = location.getBlockZ();
 					
 					float yaw = location.getYaw();
 					float pitch = location.getPitch();
@@ -57,7 +57,8 @@ public class CreateLocation implements CommandExecutor {
 					
 					player.sendMessage(Color.translate(messages.getString("messages.lobby-setup")));
 				} else {
-					player.sendMessage(Color.translate(messages.getString("messages.missing-permission")));
+					player.sendMessage(Color.translate(messages.getString("messages.missing-permission")).replaceAll("%permission%", 
+							"custolobby.setlobby"));
 					return true;
 				}
 			}

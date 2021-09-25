@@ -3,23 +3,21 @@ package net.custolobby.plugin.utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 import net.custolobby.plugin.CustoLobby;
-// import net.custolobby.plugin.color.Color;
+import net.custolobby.plugin.color.Color;
 
 public class WorldProtection implements Listener {
 	
@@ -32,25 +30,27 @@ public class WorldProtection implements Listener {
 	@EventHandler
 	public void onPlace(BlockPlaceEvent event) {
 		FileConfiguration config = plugin.getConfig();
-		// FileConfiguration messages = plugin.getMessages();
+		FileConfiguration messages = plugin.getMessages();
 		Player player = event.getPlayer();
-		if(config.getBoolean("disable-build")){
-			if(player.hasPermission("custolobby.build") || player.isOp()) return;
-			
-			event.setCancelled(true);
+		boolean disableBuild = config.getBoolean("disable-build");
+		if(disableBuild == true && player.hasPermission("custolobby.build") || player.isOp()) {
+			return;
 		}
+		player.sendMessage(Color.translate(messages.getString("messages.not-build")));
+		event.setCancelled(true);
 	}
 	
 	@EventHandler
 	public void onBreak(BlockBreakEvent event) {
 		FileConfiguration config = plugin.getConfig();
-		// FileConfiguration messages = plugin.getMessages();
+		FileConfiguration messages = plugin.getMessages();
 		Player player = event.getPlayer();
-		if(config.getBoolean("disable-build")){
-			if(player.hasPermission("custolobby.build") || player.isOp()) return;
-			
-			event.setCancelled(true);
+		boolean disableBuild = config.getBoolean("disable-build");
+		if(disableBuild == true && player.hasPermission("custolobby.build") || player.isOp()) {
+			return;
 		}
+		player.sendMessage(Color.translate(messages.getString("messages.not-break")));
+		event.setCancelled(true);
 	}
 	
 	@EventHandler
@@ -113,18 +113,10 @@ public class WorldProtection implements Listener {
 			event.setCancelled(true);
 		}
 	}
-	
+
 	@EventHandler
-	public void onInteract(PlayerInteractEvent event) {
-		FileConfiguration config = plugin.getConfig();
-		Block block = event.getClickedBlock();
-		if(block == null) {
-			return;
-		}
-		if(config.getBoolean("disable-interact") && event.getAction().equals(Action.LEFT_CLICK_BLOCK) || event.getAction().equals(
-				Action.RIGHT_CLICK_BLOCK)) {
-			event.setCancelled(true);
-		}
+	public void onPickup(PlayerPickupItemEvent event) {
+		event.setCancelled(true);
 	}
-	
+
 }

@@ -52,7 +52,8 @@ public class GetLocation implements CommandExecutor {
 						return true;
 					}
 				} else {
-					player.sendMessage(Color.translate(messages.getString("messages.missing-permission")));
+					player.sendMessage(Color.translate(messages.getString("messages.missing-permission")).replaceAll("%permission%", 
+							"custolobby.lobby"));
 					return true;
 				}
 			}

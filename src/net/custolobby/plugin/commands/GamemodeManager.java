@@ -30,7 +30,7 @@ public class GamemodeManager implements CommandExecutor {
 			Player player = (Player) commandSender;
 			
 			if(command.getName().equalsIgnoreCase("gm")) {
-				if(player.hasPermission("custolobby.gm") || player.isOp()) {
+				if(player.hasPermission("custolobby.gamemode") || player.isOp()) {
 					if(args.length == 0) {
 						player.sendMessage(Color.translate(messages.getString("messages.gm-usage")));
 						return true;
@@ -64,7 +64,8 @@ public class GamemodeManager implements CommandExecutor {
 					return true;
 					
 				} else {
-					player.sendMessage(Color.translate(messages.getString("messages.missing-permission")));
+					player.sendMessage(Color.translate(messages.getString("messages.missing-permission")).replaceAll("%permission%", 
+							"custolobby.gamemode"));
 					return true;
 				}
 			}
