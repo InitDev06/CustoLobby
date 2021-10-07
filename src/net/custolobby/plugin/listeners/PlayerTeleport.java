@@ -20,7 +20,7 @@ public class PlayerTeleport implements Listener {
 	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
-		FileConfiguration config = plugin.getConfig();
+		FileConfiguration config = CustoLobby.getConfigFile();
 		Player player = event.getPlayer();
 		Double x = Double.valueOf(config.getInt("lobby-point.x"));
 		Double y = Double.valueOf(config.getInt("lobby-point.y"));

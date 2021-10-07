@@ -12,15 +12,9 @@ import net.custolobby.plugin.color.Color;
 
 public class PlayerChat implements Listener {
 	
-	private CustoLobby plugin;
-	
-	public PlayerChat(CustoLobby plugin) {
-		this.plugin = plugin;
-	}
-
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent event) {
-		FileConfiguration chat = plugin.getChat();
+		FileConfiguration chat = CustoLobby.getChatFile();
 		Player player = event.getPlayer();
 		if(chat.getBoolean("enable-format")) {
 			if(player.hasPermission("custolobby.chat") || player.isOp()) {

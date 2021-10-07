@@ -1,0 +1,20 @@
+# options/settings
+Scoreboard:
+# the scoreboard will update with 20 ticks, this is equals to 1 second.
+# this is the title of scoreboard.
+  title: ' &e&lLOBBY '
+# you can add max 15 lines to scoreboard.
+  lines:
+    - ' '
+    - '&8» &fNick: &e%player_name%'
+    - '&8» &fRank: &r%vault_prefix%'
+    - '&8» &fWorld: &c%world_name%'
+    - ''
+    - '&8» &fLevel: &a%level%'
+    - '&8» &fExp: &b%exp%'
+    - '  '
+    - '&8» &fPing: &9%player_ping%'
+    - '&8» &fServer: &dLobby #1'
+    - '&8» &fOnline: &a%connected%'
+    - '&9'
+    - '&eyourServer.com'

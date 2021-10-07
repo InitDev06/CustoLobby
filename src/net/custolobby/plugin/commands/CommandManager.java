@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import net.custolobby.plugin.CustoLobby;
 import net.custolobby.plugin.color.Color;
+import net.custolobby.plugin.utility.Permissions;
 
 public class CommandManager implements CommandExecutor {
 
@@ -20,143 +21,154 @@ public class CommandManager implements CommandExecutor {
 	
 	@Override
 	public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-		FileConfiguration messages = plugin.getMessages();
+		FileConfiguration config = CustoLobby.getConfigFile();
+		FileConfiguration lang_en = CustoLobby.getLangEN();
+		FileConfiguration lang_es = CustoLobby.getLangES();
 		if(!(commandSender instanceof Player)) {
 			if(command.getName().equalsIgnoreCase("custolobby")) {
-				if(Bukkit.getConsoleSender().hasPermission("custolobby.manager") || Bukkit.getConsoleSender().isOp()) {
+				if(Bukkit.getConsoleSender().hasPermission("custolobby.admin") || Bukkit.getConsoleSender().isOp()) {
 					if(args.length == 0) {
-						Bukkit.getConsoleSender().sendMessage(Color.translate(messages.getString("messages.args")));
+						if(config.getString("language").equals("English")) {
+							Bukkit.getConsoleSender().sendMessage(Color.translate(lang_en.getString("messages.args")));
+						} else if(config.getString("language").equals("Spanish")) {
+							Bukkit.getConsoleSender().sendMessage(Color.translate(lang_es.getString("messages.args")));
+						}
 						return true;
 					}
-					
-					if(args[0].equalsIgnoreCase("reload")) {
-						if(args.length == 1) {
-							Bukkit.getConsoleSender().sendMessage(Color.translate(messages.getString("messages.reload")));
-							return true;
-						}
 						
-						if(args[1].equalsIgnoreCase("config")) {
-							plugin.reloadConfig();
-							Bukkit.getConsoleSender().sendMessage(Color.translate(messages.getString("messages.config")));
-							return true;
-						}
-						
-						if(args[1].equalsIgnoreCase("messages")) {
-							plugin.reloadMessages();
-							Bukkit.getConsoleSender().sendMessage(Color.translate(messages.getString("messages.messages")));
-							return true;
-						}
-						
-						if(args[1].equalsIgnoreCase("chat")) {
-							plugin.reloadChat();
-							Bukkit.getConsoleSender().sendMessage(Color.translate(messages.getString("messages.chat")));
-							return true;
-						}
-						
-						Bukkit.getConsoleSender().sendMessage(Color.translate(messages.getString("messages.file-unknown")));
-						return true;
-					}
-					
 					if(args[0].equalsIgnoreCase("info")) {
-						Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &fversion &a" + plugin.VERSION + " &frunning on Spigot &b" + Bukkit.getBukkitVersion()));
-						Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &fcreated by &bAISimple"));
+						if(config.getString("language").equals("English")) {
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&cCustoLobby &8| &fVersion &a" + plugin.VERSION + " &frunning on &b" + Bukkit.getVersion()));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&cCustoLobby &8| &fDeveloped by &bAISimple"));
+						} else if(config.getString("language").equals("Spanish")) {
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&cCustoLobby &8| &fVersion &a" + plugin.VERSION + " &ffuncionando en &b" + Bukkit.getVersion()));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&cCustoLobby &8| &fDesarrollado por &bAISimple"));
+						}
 						return true;
 					}
-					
+						
 					if(args[0].equalsIgnoreCase("help")) {
-						Bukkit.getConsoleSender().sendMessage(Color.translate("&8[&eCustoLobby&8] &fcommands:"));
-						Bukkit.getConsoleSender().sendMessage(Color.translate(""));
-						Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &b/clobby <help> &8- &fshow this message."));
-						Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &b/clobby <reload> &8- &freload the plugin files."));
-						Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &b/clobby <info> &8- &fshow the plugin information."));
-						Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &b/flight &8- &ftoggle your flight mode."));
-						Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &b/gm &8- &fchange your gamemode."));
-						Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &b/vanish &8- &ftoggle your invisibility mode."));
-						Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &b/setlobby &8- &fsave the spawn location."));
-						Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &b/lobby &8- &fteleport you to spawn."));
-						Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &b/help &8- &fshow a help message for the users."));
-						Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &b/nick <name> &8- &fchange your display name."));
-						Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &b/tp <name> &8- &fteleport to any player."));
+						if(config.getString("language").equals("English")) {
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&cCustoLobby &8| &7Commands"));
+							Bukkit.getConsoleSender().sendMessage(Color.translate(""));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/clobby <help> &7- &aShow this message."));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/clobby <info> &7- &aShow the plugin information."));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/flight &7- &aToggle your flight mode."));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/gm &7- &aChange your gamemode."));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/vanish &7- &aToggle your invisibility mode."));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/setlobby &7- &aSave the spawn location."));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/lobby &7- &aTeleport you to spawn."));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/help &7- &aShow a help message for the users."));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/nick <name> &7- &aChange your display name."));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/tp <name> &7- &aTeleport to any player."));
+						} else if(config.getString("language").equals("Spanish")) {
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&cCustoLobby &8| &7Comandos"));
+							Bukkit.getConsoleSender().sendMessage(Color.translate(""));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/clobby <help> &7- &aMuestra este mensaje."));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/clobby <info> &7- &aMuestra informacion sobre el complemento"));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/flight &7- &aAlterna tu modo de vuelo."));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/gm &8- &aCambia tu modo de juego."));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/vanish &7- &aAlterna tu modo de invisibilidad."));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/setlobby &7- &aGuarda la ubicacion del vestibulo."));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/lobby &7- &aTeletransportate al vestibulo"));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/help &7- &aMuestra un mensaje de ayuda"));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/nick <name> &7- &aCambia tu nombre de usuario visible"));
+							Bukkit.getConsoleSender().sendMessage(Color.translate("&8- &e/tp <name> &7- &aTeletransportate a algun jugador."));
+						}
 						return true;
 					}
 					
-					Bukkit.getConsoleSender().sendMessage(Color.translate(messages.getString("messages.unknown-args")));
+					if(config.getString("language").equals("English")) {
+						Bukkit.getConsoleSender().sendMessage(Color.translate(lang_en.getString("messages.unknown-args")));
+					} else if(config.getString("language").equals("Spanish")) {
+						Bukkit.getConsoleSender().sendMessage(Color.translate(lang_es.getString("messages.unknown-args")));
+					}
 					return true;
-					
+						
 				} else {
-					Bukkit.getConsoleSender().sendMessage(Color.translate(messages.getString("messages.missing-permission")).replaceAll(
-							"%permission%", "custolobby.manager"));
+					if(config.getString("language").equals("English")) {
+						Bukkit.getConsoleSender().sendMessage(Color.translate(lang_en.getString("messages.missing-permission")).replaceAll(
+								"%permission%", Permissions.permission("admin")));
+					} else if(config.getString("language").equals("Spanish")) {
+						Bukkit.getConsoleSender().sendMessage(Color.translate(lang_es.getString("messages.missing-permission")).replaceAll(
+								"%permission%", Permissions.permission("admin")));
+					}
 					return true;
 				}
+			
 			}
 			
 		} else {
 			Player player = (Player) commandSender;
 			
 			if(command.getName().equalsIgnoreCase("custolobby")) {
-				if(player.hasPermission("custolobby.manager") || player.isOp()) {
+				if(player.hasPermission("custolobby.admin") || player.isOp()) {
 					if(args.length == 0) {
-						player.sendMessage(Color.translate(messages.getString("messages.args")));
+						if(config.getString("language").equals("English")) {
+							player.sendMessage(Color.translate(lang_en.getString("messages.args")));	
+						} else if(config.getString("language").equals("Spanish")) {
+							player.sendMessage(Color.translate(lang_es.getString("messages.args")));
+						}
 						return true;
 					}
-					
-					if(args[0].equalsIgnoreCase("reload")) {
-						if(args.length == 1) {
-							player.sendMessage(Color.translate(messages.getString("messages.reload")));
-							return true;
-						}
 						
-						if(args[1].equalsIgnoreCase("config")) {
-							plugin.reloadConfig();
-							player.sendMessage(Color.translate(messages.getString("messages.config")));
-							return true;
-						}
-						
-						if(args[1].equalsIgnoreCase("messages")) {
-							plugin.reloadMessages();
-							player.sendMessage(Color.translate(messages.getString("messages.messages")));
-							return true;
-						}
-						
-						if(args[1].equalsIgnoreCase("chat")) {
-							plugin.reloadChat();
-							player.sendMessage(Color.translate(messages.getString("messages.chat")));
-							return true;
-						}
-						
-						player.sendMessage(Color.translate(messages.getString("messages.file-null")));
-						return true;
-					}
-					
 					if(args[0].equalsIgnoreCase("info")) {
-						player.sendMessage(Color.translate("&8[&eCustoLobby&8] &fversion &a" + plugin.VERSION + " &frunning on Spigot &b" + Bukkit.getBukkitVersion()));
-						player.sendMessage(Color.translate("&8[&eCustoLobby&8] &fcreated by &bAISimple"));
+						if(config.getString("language").equals("English")) {
+							player.sendMessage(Color.translate("&cCustoLobby &8| &fVersion &a" + plugin.VERSION + " &frunning on &b" + Bukkit.getVersion()));
+							player.sendMessage(Color.translate("&cCustoLobby &8| &fDeveloped by &bAISimple"));
+						} else if(config.getString("language").equals("Spanish")) {
+							player.sendMessage(Color.translate("&cCustoLobby &8| &fVersion &a" + plugin.VERSION + " &ffuncionando en &b" + Bukkit.getVersion()));
+							player.sendMessage(Color.translate("&cCustoLobby &8| &fDesarrollado por &bAISimple"));
+						}
 						return true;
 					}
-					
+						
 					if(args[0].equalsIgnoreCase("help")) {
-						player.sendMessage(Color.translate("&8[&eCustoLobby&8] &fcommands:"));
-						player.sendMessage(Color.translate(""));
-						player.sendMessage(Color.translate("&8- &b/clobby <help> &8- &fshow this message."));
-						player.sendMessage(Color.translate("&8- &b/clobby <reload> &8- &freload the plugin files."));
-						player.sendMessage(Color.translate("&8- &b/clobby <info> &8- &fshow the plugin information."));
-						player.sendMessage(Color.translate("&8- &b/flight &8- &ftoggle your flight mode."));
-						player.sendMessage(Color.translate("&8- &b/gm &8- &fchange your gamemode."));
-						player.sendMessage(Color.translate("&8- &b/vanish &8- &ftoggle your invisibility mode."));
-						player.sendMessage(Color.translate("&8- &b/setlobby &8- &fsave the spawn location."));
-						player.sendMessage(Color.translate("&8- &b/lobby &8- &fteleport you to spawn."));
-						player.sendMessage(Color.translate("&8- &b/help &8- &fshow a help message for the users."));
-						player.sendMessage(Color.translate("&8- &b/nick <name> &8- &fchange your display name."));
-						player.sendMessage(Color.translate("&8- &b/tp <name> &8- &fteleport to any player."));
+						if(config.getString("language").equals("English")) {
+							player.sendMessage(Color.translate("&cCustoLobby &8| &7Commands"));
+							player.sendMessage(Color.translate(""));
+							player.sendMessage(Color.translate("&8- &e/clobby <help> &7- &ashow this message."));
+							player.sendMessage(Color.translate("&8- &e/clobby <info> &7- &ashow the plugin information."));
+							player.sendMessage(Color.translate("&8- &e/flight &7- &atoggle your flight mode."));
+							player.sendMessage(Color.translate("&8- &e/gm &7- &achange your gamemode."));
+							player.sendMessage(Color.translate("&8- &e/vanish &7- &atoggle your invisibility mode."));
+							player.sendMessage(Color.translate("&8- &e/setlobby &7- &asave the spawn location."));
+							player.sendMessage(Color.translate("&8- &e/lobby &7- &ateleport you to spawn."));
+							player.sendMessage(Color.translate("&8- &e/help &7- &ashow a help message for the users."));
+							player.sendMessage(Color.translate("&8- &e/nick <name> &7- &achange your display name."));
+							player.sendMessage(Color.translate("&8- &e/tp <name> &7- &ateleport to any player."));
+						} else if(config.getString("language").equals("Spanish")) {
+							player.sendMessage(Color.translate("&cCustoLobby &8| &7Comandos"));
+							player.sendMessage(Color.translate(""));
+							player.sendMessage(Color.translate("&8- &e/clobby <help> &7- &amuestra este mensaje."));
+							player.sendMessage(Color.translate("&8- &e/clobby <info> &7- &amuestra informacion sobre el complemento"));
+							player.sendMessage(Color.translate("&8- &e/flight &7- &aalterna tu modo de vuelo."));
+							player.sendMessage(Color.translate("&8- &e/gm &8- &acambia tu modo de juego."));
+							player.sendMessage(Color.translate("&8- &e/vanish &7- &aalterna tu modo de invisibilidad."));
+							player.sendMessage(Color.translate("&8- &e/setlobby &7- &aguarda la ubicacion del vestibulo."));
+							player.sendMessage(Color.translate("&8- &e/lobby &7- &ateletransportate al vestibulo"));
+							player.sendMessage(Color.translate("&8- &e/help &7- &amuestra un mensaje de ayuda"));
+							player.sendMessage(Color.translate("&8- &e/nick <name> &7- &acambia tu nombre de usuario visible"));
+							player.sendMessage(Color.translate("&8- &e/tp <name> &7- &ateletransportate a algun jugador."));
+						}
 						return true;
 					}
-					
-					player.sendMessage(Color.translate(messages.getString("messages.unknown-args")));
+						
+					if(config.getString("language").equals("English")) {
+						player.sendMessage(Color.translate(lang_en.getString("messages.unknown-args")));
+					} else if(config.getString("language").equals("Spanish")) {
+						player.sendMessage(Color.translate(lang_es.getString("messages.unknown-args")));
+					}
 					return true;
-					
+						
 				} else {
-					player.sendMessage(Color.translate(messages.getString("messages.missing-permission")).replaceAll("%permission%", 
-							"custolobby.manager"));
+					if(config.getString("language").equals("English")) {
+						player.sendMessage(Color.translate(lang_en.getString("messages.missing-permission")).replaceAll("%permission%", Permissions.
+								permission("admin")));
+					} else if(config.getString("language").equals("English")) {
+						player.sendMessage(Color.translate(lang_es.getString("messages.missing-permission")).replaceAll("%permission%", Permissions.
+								permission("admin")));
+					}
 					return true;
 				}
 			}

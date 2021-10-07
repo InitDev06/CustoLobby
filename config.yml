@@ -1,18 +1,45 @@
+# Author: AISmple
+# Version: 1.0.1
+# Source: https://github.com/GitSimple-Dev/CustoLobby
+#------------
+# Description:
+#
+#  CustoLobby is a plugin what allow customize full the lobby of your server, this plugin contains multiple functions, how (Sounds, Fireworks, Titles)
+#  also the plugin contains Scoreboard, chat-format, chat-protection (word filter & blocked commands), tab-list and more options!
+#  this plugin supports the versions of Spigot from 1.8 to 1.10.2, also you can select two languages, the langs supported actualy is English and Spanish.
+#
+#  If you have a bug, report in plugin page.
+#  also can revise the source code for you use if you liked, but, you should give credits for the original author.
+#------------
+# Placeholders:
+#
+#  %player_name% - Returns player display name
+#  %world_name% - Returns player world name
+#  %permission% - Returns permission id
+#  %target_name% - Returns target display name
+#  %new_nick% - Returns new display name
+#  %message% - Returns player message
+#  %level% - Returns player level
+#------------
+# Languages:
+#
+#  English - The plugin loads the lang_en file.
+#  Spanish - The plugin loads the lang_es file.
+language: English
 lobby-point: 
   world: ""
   x:
   y:
   z:
   yaw:
-  pitch:  
+  pitch: 
 disable-build: true
 disable-damage: true
 disable-hunger: true
 disable-weather: true
 disable-entities: true
 disable-interact: true
-build-titles: true
-build-actionbar: true
+build-title: true
 build-firework: true
 give-speed: true
 reproduce-sound: true
@@ -24,3 +51,13 @@ title:
   fadeOut: 35
 firework-power: 5
 sound: NOTE_PLING
+inventory:
+  name: "&bHelp &8| &e¿You need help?"
+  items:
+    player_head: 
+      id: 397
+      data: 5
+      slot: 3
+      lore:
+      - "&fPlayer: &b%player_name%'s"
+      - "&fRank: %vault_prefix%"

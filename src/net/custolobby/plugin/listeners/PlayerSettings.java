@@ -7,23 +7,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import net.custolobby.plugin.CustoLobby;
 
 public class PlayerSettings implements Listener {
-	
-	private CustoLobby plugin;
-	
-	public PlayerSettings(CustoLobby plugin) {
-		this.plugin = plugin;
-	}
-	
+
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		FileConfiguration config = plugin.getConfig();
+		FileConfiguration config = CustoLobby.getConfigFile();
 		
 		player.setHealth(20);
 		player.setFoodLevel(20);
@@ -33,7 +26,7 @@ public class PlayerSettings implements Listener {
 		
 		if(config.getBoolean("give-speed")) {
 			if(!player.hasPotionEffect(PotionEffectType.SPEED)) {
-				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 1));
+				player.addPotionEffect(PotionEffectType.SPEED.createEffect(1000000, 0));
 			}
 		}
 		

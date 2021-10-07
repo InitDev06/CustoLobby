@@ -11,15 +11,9 @@ import net.custolobby.plugin.CustoLobby;
 
 public class PlayerSound implements Listener {
 
-	private CustoLobby plugin;
-	
-	public PlayerSound(CustoLobby plugin) {
-		this.plugin = plugin;
-	}
-	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
-		FileConfiguration config = plugin.getConfig();
+		FileConfiguration config = CustoLobby.getConfigFile();
 		Player player = event.getPlayer();
 		if(config.getBoolean("reproduce-sound")) {
 			player.playSound(player.getLocation(), Sound.valueOf(config.getString("sound")), 15, (float) -0.2);

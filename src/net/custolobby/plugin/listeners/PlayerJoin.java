@@ -15,35 +15,52 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoin implements Listener {
 	
-	private CustoLobby plugin;
-	
-	public PlayerJoin(CustoLobby plugin) {
-		this.plugin = plugin;
-	}
-	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
-		FileConfiguration messages = plugin.getMessages();
+		FileConfiguration config = CustoLobby.getConfigFile();
+		FileConfiguration lang_en = CustoLobby.getLangEN();
+		FileConfiguration lang_es = CustoLobby.getLangES();
 		Player player = event.getPlayer();
-		if(player.hasPermission("custolobby.join") || player.isOp()) {
-			event.setJoinMessage(Color.translate(PlaceholderAPI.setPlaceholders(player, messages.getString("messages.rank-join"))).replaceAll("%player_name%", 
-					player.getName()));
-		} else {
-			event.setJoinMessage(null);
+		if(config.getString("language").equals("English")) {
+			if(player.hasPermission("custolobby.join") || player.isOp()) {
+				event.setJoinMessage(Color.translate(PlaceholderAPI.setPlaceholders(player, lang_en.getString("messages.rank-join"))).replaceAll(
+						"%player_name%", player.getName()));
+			} else {
+				event.setJoinMessage(null);
+			}
+		} else if(config.getString("language").equals("Spanish")) {
+			if(player.hasPermission("custolobby.join") || player.isOp()) {
+				event.setJoinMessage(Color.translate(PlaceholderAPI.setPlaceholders(player, lang_es.getString("messages.rank-join"))).replaceAll(
+						"%player_name%", player.getName()));
+			} else {
+				event.setJoinMessage(null);
+			}
 		}
 	}
 	
 	@EventHandler
 	public void motd(PlayerJoinEvent event) {
-		FileConfiguration config = plugin.getConfig();
-		FileConfiguration messages = plugin.getMessages();
+		FileConfiguration config = CustoLobby.getConfigFile();
+		FileConfiguration lang_en = CustoLobby.getLangEN();
+		FileConfiguration lang_es = CustoLobby.getLangES();
 		Player player = event.getPlayer();
-		if(config.getBoolean("send-motd")) {
-			List<String> lore = messages.getStringList("messages.motd");
-			for(int i = 0 ; i < lore.size(); i ++) {
-				String motd = Color.translate(lore.get(i).replaceAll("%version%", plugin.VERSION));
-				
-				player.sendMessage(motd);
+		if(config.getString("language").equals("English")) {
+			if(config.getBoolean("send-motd")) {
+				List<String> lore = lang_en.getStringList("messages.motd");
+				for(int i = 0 ; i < lore.size(); i ++) {
+					String motd = Color.translate(lore.get(i).replaceAll("%version%", CustoLobby.getInstance().VERSION));
+					
+					player.sendMessage(motd);
+				}
+			}
+		} else if(config.getString("language").equals("English")) {
+			if(config.getBoolean("send-motd")) {
+				List<String> lore = lang_es.getStringList("messages.motd");
+				for(int i = 0 ; i < lore.size(); i ++) {
+					String motd = Color.translate(lore.get(i).replaceAll("%version%", CustoLobby.getInstance().VERSION));
+					
+					player.sendMessage(motd);
+				}
 			}
 		}
 	}

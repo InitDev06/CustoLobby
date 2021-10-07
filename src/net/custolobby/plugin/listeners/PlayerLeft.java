@@ -13,25 +13,34 @@ import net.custolobby.plugin.color.Color;
 
 public class PlayerLeft implements Listener {
 	
-	private CustoLobby plugin;
-	
-	public PlayerLeft(CustoLobby plugin) {
-		this.plugin = plugin;
-	}
-	
 	@EventHandler
 	public void onQuit(PlayerQuitEvent event) {
-		FileConfiguration messages = plugin.getMessages();
+		FileConfiguration config = CustoLobby.getConfigFile();
+		FileConfiguration lang_en = CustoLobby.getLangEN();
+		FileConfiguration lang_es = CustoLobby.getLangES();
 		Player player = event.getPlayer();
-		if(player.hasPermission("custolobby.quit") || player.isOp()) {
-			event.setQuitMessage(Color.translate(PlaceholderAPI.setPlaceholders(player, messages.getString("messages.rank-quit")))
-					.replaceAll("%player_name%", player.getDisplayName()));
-		} else {
-			event.setQuitMessage(null);
-		}
-		
-		if(player.hasPotionEffect(PotionEffectType.SPEED)) {
-			player.removePotionEffect(PotionEffectType.SPEED);
+		if(config.getString("language").equals("English")) {
+			if(player.hasPermission("custolobby.quit") || player.isOp()) {
+				event.setQuitMessage(Color.translate(PlaceholderAPI.setPlaceholders(player, lang_en.getString("messages.rank-quit")))
+						.replaceAll("%player_name%", player.getDisplayName()));
+			} else {
+				event.setQuitMessage(null);
+			}
+			
+			if(player.hasPotionEffect(PotionEffectType.SPEED)) {
+				player.removePotionEffect(PotionEffectType.SPEED);
+			}
+		} else if(config.getString("language").equals("English")) {
+			if(player.hasPermission("custolobby.quit") || player.isOp()) {
+				event.setQuitMessage(Color.translate(PlaceholderAPI.setPlaceholders(player, lang_es.getString("messages.rank-quit")))
+						.replaceAll("%player_name%", player.getDisplayName()));
+			} else {
+				event.setQuitMessage(null);
+			}
+			
+			if(player.hasPotionEffect(PotionEffectType.SPEED)) {
+				player.removePotionEffect(PotionEffectType.SPEED);
+			}
 		}
 	}
 

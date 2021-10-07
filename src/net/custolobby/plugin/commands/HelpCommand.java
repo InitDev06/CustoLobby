@@ -13,29 +13,36 @@ import net.custolobby.plugin.CustoLobby;
 import net.custolobby.plugin.color.Color;
 
 public class HelpCommand implements CommandExecutor {
-	
-	private CustoLobby plugin;
-	
-	public HelpCommand(CustoLobby plugin) {
-		this.plugin = plugin;
-	}
 
 	@Override
 	public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-		FileConfiguration messages = plugin.getMessages();
+		FileConfiguration config = CustoLobby.getConfigFile();
+		FileConfiguration lang_en = CustoLobby.getLangEN();
+		FileConfiguration lang_es = CustoLobby.getLangES();
 		if(!(commandSender instanceof Player)) {
-			Bukkit.getConsoleSender().sendMessage(Color.translate(messages.getString("messages.must-be-player")));
+			if(config.getString("language").equals("English")) {
+				Bukkit.getConsoleSender().sendMessage(Color.translate(lang_en.getString("messages.must-be-player")));
+			} else if(config.getString("language").equals("Spanish")) {
+				Bukkit.getConsoleSender().sendMessage(Color.translate(lang_es.getString("messages.must-be-player")));
+			}
 			return false;
 			
 		} else {
 			Player player = (Player) commandSender;
 			
 			if(command.getName().equalsIgnoreCase("help")) {
-				List<String> lore = messages.getStringList("messages.help-message");
-				for(int i = 0 ; i < lore.size(); i++) {
-					String help = Color.translate(lore.get(i));
-					
-					player.sendMessage(help);
+				if(config.getString("language").equals("English")) {
+					List<String> msg = lang_en.getStringList("messages.help-message");
+					for(int i = 0 ; i < msg.size(); i++) {
+						String help = Color.translate(msg.get(i));
+						player.sendMessage(help);
+					}
+				} else if(config.getString("language").equals("Spanish")) {
+					List<String> msg = lang_es.getStringList("messages.help-message");
+					for(int i = 0 ; i < msg.size(); i++) {
+						String help = Color.translate(msg.get(i));
+						player.sendMessage(help);
+					}
 				}
 			}
 		}

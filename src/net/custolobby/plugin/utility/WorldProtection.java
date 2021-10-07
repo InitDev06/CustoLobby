@@ -29,33 +29,51 @@ public class WorldProtection implements Listener {
 	
 	@EventHandler
 	public void onPlace(BlockPlaceEvent event) {
-		FileConfiguration config = plugin.getConfig();
-		FileConfiguration messages = plugin.getMessages();
+		FileConfiguration config = CustoLobby.getConfigFile();
+		FileConfiguration lang_en = CustoLobby.getLangEN();
+		FileConfiguration lang_es = CustoLobby.getLangES();
 		Player player = event.getPlayer();
 		boolean disableBuild = config.getBoolean("disable-build");
-		if(disableBuild == true && player.hasPermission("custolobby.build") || player.isOp()) {
-			return;
+		if(config.getString("language").equals("English")) {
+			if(disableBuild == true && player.hasPermission("custolobby.build") || player.isOp()) {
+				return;
+			}
+			player.sendMessage(Color.translate(lang_en.getString("messages.not-build")));
+			event.setCancelled(true);
+		} else if(config.getString("language").equals("Spanish")) {
+			if(disableBuild == true && player.hasPermission("custolobby.build") || player.isOp()) {
+				return;
+			}
+			player.sendMessage(Color.translate(lang_es.getString("messages.not-build")));
+			event.setCancelled(true);
 		}
-		player.sendMessage(Color.translate(messages.getString("messages.not-build")));
-		event.setCancelled(true);
 	}
 	
 	@EventHandler
 	public void onBreak(BlockBreakEvent event) {
-		FileConfiguration config = plugin.getConfig();
-		FileConfiguration messages = plugin.getMessages();
+		FileConfiguration config = CustoLobby.getConfigFile();
+		FileConfiguration lang_en = CustoLobby.getLangEN();
+		FileConfiguration lang_es = CustoLobby.getLangES();
 		Player player = event.getPlayer();
 		boolean disableBuild = config.getBoolean("disable-build");
-		if(disableBuild == true && player.hasPermission("custolobby.build") || player.isOp()) {
-			return;
+		if(config.getString("language").equals("English")) {
+			if(disableBuild == true && player.hasPermission("custolobby.build") || player.isOp()) {
+				return;
+			}
+			player.sendMessage(Color.translate(lang_en.getString("messages.not-break")));
+			event.setCancelled(true);
+		} else if(config.getString("language").equals("Spanish")) {
+			if(disableBuild == true && player.hasPermission("custolobby.build") || player.isOp()) {
+				return;
+			}
+			player.sendMessage(Color.translate(lang_es.getString("messages.not-break")));
+			event.setCancelled(true);
 		}
-		player.sendMessage(Color.translate(messages.getString("messages.not-break")));
-		event.setCancelled(true);
 	}
 	
 	@EventHandler
 	public void onDamaged(EntityDamageEvent event) {
-		FileConfiguration config = plugin.getConfig();
+		FileConfiguration config = CustoLobby.getConfigFile();
 		if(config.getBoolean("disable-damage") && event.getCause() == EntityDamageEvent.DamageCause.FALL || event.getCause() == EntityDamageEvent.
 				DamageCause.ENTITY_ATTACK || event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION || event.getCause() == 
 				EntityDamageEvent.DamageCause.SUFFOCATION || event.getCause() == EntityDamageEvent.DamageCause.SUICIDE || event.getCause() == 
@@ -67,7 +85,7 @@ public class WorldProtection implements Listener {
 	
 	@EventHandler
 	public void onHunger(FoodLevelChangeEvent event) {
-		FileConfiguration config = plugin.getConfig();
+		FileConfiguration config = CustoLobby.getConfigFile();
 		if(config.getBoolean("disable-hunger")) {
 			event.setCancelled(true);
 		}
@@ -75,7 +93,7 @@ public class WorldProtection implements Listener {
 	
 	@EventHandler
 	public void onWeather(WeatherChangeEvent event) {
-		FileConfiguration config = plugin.getConfig();
+		FileConfiguration config = CustoLobby.getConfigFile();
 		if(config.getBoolean("disable-weather")) {
 			event.setCancelled(true);
 		}
@@ -83,7 +101,7 @@ public class WorldProtection implements Listener {
 	
 	@EventHandler
 	public void onSpawnEntities(EntitySpawnEvent event) {
-		FileConfiguration config = plugin.getConfig();
+		FileConfiguration config = CustoLobby.getConfigFile();
 		if(config.getBoolean("disable-entities")) {
 			event.setCancelled(true);
 		}
@@ -92,7 +110,7 @@ public class WorldProtection implements Listener {
 	@EventHandler
 	public void onFall(EntityDamageEvent event) {
 		Entity entity = event.getEntity();
-		FileConfiguration config = plugin.getConfig();
+		FileConfiguration config = CustoLobby.getConfigFile();
 		Double x = Double.valueOf(config.getInt("lobby-point.x"));
 		Double y = Double.valueOf(config.getInt("lobby-point.y"));
 		Double z = Double.valueOf(config.getInt("lobby-point.z"));
@@ -118,5 +136,11 @@ public class WorldProtection implements Listener {
 	public void onPickup(PlayerPickupItemEvent event) {
 		event.setCancelled(true);
 	}
-
+	
+	@EventHandler
+	public void evitDamageByEnder(EntityDamageEvent event) {
+		if(event.getCause() == EntityDamageEvent.DamageCause.FALLING_BLOCK) {
+			event.setCancelled(true);
+		}
+	}
 }

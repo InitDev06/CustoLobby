@@ -14,17 +14,11 @@ import net.custolobby.plugin.CustoLobby;
 
 public class FireworkBuilder implements Listener {
 	
-	private CustoLobby plugin;
-	
-	public FireworkBuilder(CustoLobby plugin) {
-		this.plugin = plugin;
-	}
-	
 	@EventHandler
 	public void build(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		FileConfiguration config = plugin.getConfig();
-		int power = Integer.valueOf(config.getInt("firework-power"));
+		FileConfiguration config = CustoLobby.getConfigFile();
+		int power = Integer.valueOf(config.getString("firework-power"));
 		if(config.getBoolean("build-firework")) {
 			if(player.hasPermission("custolobby.fireworks") || player.isOp()) {
 				Firework firework = (Firework) event.getPlayer().getLocation().getWorld().spawn(event.getPlayer().getLocation(), Firework.class);

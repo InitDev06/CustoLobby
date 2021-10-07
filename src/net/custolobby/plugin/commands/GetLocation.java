@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import net.custolobby.plugin.CustoLobby;
 import net.custolobby.plugin.color.Color;
+import net.custolobby.plugin.utility.Permissions;
 
 public class GetLocation implements CommandExecutor {
 	
@@ -22,10 +23,15 @@ public class GetLocation implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-		FileConfiguration messages = plugin.getMessages();
-		FileConfiguration config = plugin.getConfig();
+		FileConfiguration config = CustoLobby.getConfigFile();
+		FileConfiguration lang_en = CustoLobby.getLangEN();
+		FileConfiguration lang_es = CustoLobby.getLangES();
 		if(!(commandSender instanceof Player)) {
-			Bukkit.getConsoleSender().sendMessage(Color.translate(messages.getString("messages.must-be-player")));
+			if(config.getString("language").equals("English")) {
+				Bukkit.getConsoleSender().sendMessage(Color.translate(lang_en.getString("messages.must-be-player")));
+			} else if(config.getString("language").equals("Spanish")) {
+				Bukkit.getConsoleSender().sendMessage(Color.translate(lang_es.getString("messages.must-be-player")));
+			}
 			return false;
 			
 		} else {
@@ -34,26 +40,51 @@ public class GetLocation implements CommandExecutor {
 			if(command.getName().equalsIgnoreCase("lobby")) {
 				if(player.hasPermission("custolobby.lobby") || player.isOp()) {
 					if(config.contains("lobby-point.world")) {
-						Double x = Double.valueOf(config.getInt("lobby-point.x"));
-						Double y = Double.valueOf(config.getInt("lobby-point.y"));
-						Double z = Double.valueOf(config.getInt("lobby-point.z"));
-						
-						Float yaw = Float.valueOf(config.getInt("lobby-point.yaw"));
-						Float pitch = Float.valueOf(config.getInt("lobby-point.pitch"));
-						
-						World world = plugin.getServer().getWorld(config.getString("lobby-point.world"));
-						
-						Location location = new Location(world, x, y, z, yaw, pitch);
-						
-						player.teleport(location);
-						player.sendMessage(Color.translate(messages.getString("messages.lobby-teleport")));
+						if(config.getString("language").equals("English")) {
+							World world = plugin.getServer().getWorld(config.getString("lobby-point.world"));
+							
+							Double x = Double.valueOf(config.getInt("lobby-point.x"));
+							Double y = Double.valueOf(config.getInt("lobby-point.y"));
+							Double z = Double.valueOf(config.getInt("lobby-point.z"));
+							
+							Float yaw = Float.valueOf(config.getInt("lobby-point.yaw"));
+							Float pitch = Float.valueOf(config.getInt("lobby-point.pitch"));
+							
+							Location location = new Location(world, x, y, z, yaw, pitch);
+							
+							player.teleport(location);
+							player.sendMessage(Color.translate(lang_en.getString("messages.lobby-teleport")));
+						} else if(config.getString("language").equals("Spanish")) {
+							World world = plugin.getServer().getWorld(config.getString("lobby-point.world"));
+							
+							Double x = Double.valueOf(config.getInt("lobby-point.x"));
+							Double y = Double.valueOf(config.getInt("lobby-point.y"));
+							Double z = Double.valueOf(config.getInt("lobby-point.z"));
+							
+							Float yaw = Float.valueOf(config.getInt("lobby-point.yaw"));
+							Float pitch = Float.valueOf(config.getInt("lobby-point.pitch"));
+							
+							Location location = new Location(world, x, y, z, yaw, pitch);
+							
+							player.teleport(location);
+							player.sendMessage(Color.translate(lang_es.getString("messages.lobby-teleport")));
+						}
 					} else {
-						player.sendMessage(Color.translate(messages.getString("messages.lobby-unknown")));
+						if(config.getString("language").equals("English")) {
+							player.sendMessage(Color.translate(lang_en.getString("messages.lobby-unknown")));
+						} else if(config.getString("language").equals("Spanish")) {
+							player.sendMessage(Color.translate(lang_es.getString("messages.lobby-unknown")));
+						}
 						return true;
 					}
 				} else {
-					player.sendMessage(Color.translate(messages.getString("messages.missing-permission")).replaceAll("%permission%", 
-							"custolobby.lobby"));
+					if(config.getString("language").equals("Spanish")) {
+						player.sendMessage(Color.translate(lang_en.getString("messages.missing-permission")).replaceAll("%permission%", 
+								Permissions.permission("lobby")));
+					} else if(config.getString("language").equals("Spanish")) {
+						player.sendMessage(Color.translate(lang_es.getString("messages.missing-permission")).replaceAll("%permission%", 
+								Permissions.permission("lobby")));
+					}
 					return true;
 				}
 			}

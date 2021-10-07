@@ -1,9 +1,8 @@
 main: net.custolobby.plugin.CustoLobby
 name: CustoLobby
 version: 1.0.1
-author: AISimple
+author: [AISimple]
 softdepends: [PlaceholderAPI]
-depends: [TitleAPI, ActionBarAPI]
 permissions:
   custolobby.*:
     children:
@@ -14,11 +13,13 @@ permissions:
       - custolobby.chat
       - custolobby.vanish
       - custolobby.nick
-      - custolobby.manager
+      - custolobby.admin
       - custolobby.fly
+      - custolobby.fly.other
       - custolobby.setlobby
       - custolobby.lobby
       - custolobby.gamemode
+      - custolobby.gamemode.other
       - custolobby.filter.bypass
       - custolobby.blacklist.bypass
       - custolobby.fireworks
@@ -27,13 +28,13 @@ commands:
   tp:
     aliases: [teleport]
   vanish:
-    aliases: [v, invisibility]
+    aliases: [v, invisibility, ocultarse]
   nick:
     aliases: [name]
   custolobby: 
     aliases: [cl, clobby]
   fly:
-    aliases: [flight]
+    aliases: [flight, volar]
   setlobby:
     aliases: [sethub, setspawn]
   lobby:
@@ -41,4 +42,4 @@ commands:
   gm:
     aliases: [gamemode]
   help:
-    aliases: [h, support]
+    aliases: [h, support, ayuda]
