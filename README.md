@@ -1,2 +1,2 @@
 # CustoLobby
-Source code.
+Deprecated project.
